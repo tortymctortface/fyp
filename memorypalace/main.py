@@ -6,11 +6,12 @@ from sense2vec import Sense2VecComponent
 nlp = spacy.load("en_core_web_md")
 s2v = Sense2VecComponent(nlp.vocab).from_disk("C:/FinalYear/FYP/s2v_old")
 nlp.add_pipe(s2v)
-with open("memorypalace/vocab/vocab.txt","r", encoding="utf-8") as f:
+with open("/memorypalace/to_remember/input_list.txt","r", encoding="utf-8") as f:
         TEXT = f.read()
-NPPW = nlp(TEXT)
+doc = nlp(TEXT)
 
 def list_of_files (doc):
+    #find all first letters in the doc and create only unique a list of unique text file names to use
     text_files = list()
     for token in doc:
         if token.text.isalpha():
@@ -19,7 +20,8 @@ def list_of_files (doc):
     return set(text_files)
 
 def find_all_begining_with (doc):
-    #vocab_list = list(nlp.vocab.strings)
+    #take your entire vocab and find all words in it that begin with the same letter that each of the text_files (created in list_of_files) end with
+    # ..and create each text file and populate it with its own vocab
     with open("memorypalace/vocab/vocab.txt","r", encoding="utf-8") as f:
         vocab_list = list(f.readlines())
         text_files = list_of_files(doc)
@@ -30,7 +32,9 @@ def find_all_begining_with (doc):
                         f.write(string + " ")
     return text_files
 
-def remove_uneeded (doc):
+def only_verbs_please (doc):
+    #for every text file populated in find_all_begining_with process each one in the nlp pipeline
+    #... and re-populate each file, this time only using the available verbs
     for file in find_all_begining_with(doc):
         with open(("memorypalace/textfiles/"+ file),"r", encoding="utf-8") as f:
             TEXT = f.read()
@@ -40,23 +44,9 @@ def remove_uneeded (doc):
                 if token.pos_ == "VERB":
                     f.write(token.lemma_ + " ")
                         
-remove_uneeded(NPPW)
-with open("memorypalace/textfiles/texto.txt","r", encoding="utf-8") as f:
-            TEXT = f.read()
-print(TEXT)
-#with open("C:/FinalYear/FYP/fyp/text.txt", encoding="utf-8") as f:
- #   TEXT = f.read()
- 
-#docu =nlp(text_file)
-
-#for line in text_file:
-    #for match_ID, start, end in matcher(docu):
-      #  line = line.replace(str(Span(docu,start,end)), "")
-       # text_file.write(line)
-#for token in docu:
-  #  if token.pos_ == ("VERB" or "ADJ"):
-       # print (token.text)
+remove_uneeded(doc)
 
 #freq = doc[0:1]._.s2v_freq
 #vector = doc[0:1]._.s2v_vec
 #most_similar = doc[0:1]._.s2v_most_similar(10)
+#vocab_list = list(nlp.vocab.strings)

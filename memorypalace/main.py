@@ -6,7 +6,7 @@ from sense2vec import Sense2VecComponent
 nlp = spacy.load("en_core_web_md")
 s2v = Sense2VecComponent(nlp.vocab).from_disk("C:/FinalYear/FYP/s2v_old")
 nlp.add_pipe(s2v)
-with open("/memorypalace/to_remember/input_list.txt","r", encoding="utf-8") as f:
+with open("memorypalace/to_remember/input_list.txt","r", encoding="utf-8") as f:
         TEXT = f.read()
 doc = nlp(TEXT)
 
@@ -18,7 +18,7 @@ def list_of_files (doc):
             text_files.append ("text" + (str(token.text[0])).lower() + ".txt")
     print(set(text_files))
     return set(text_files)
-
+    
 def find_all_begining_with (doc):
     #take your entire vocab and find all words in it that begin with the same letter that each of the text_files (created in list_of_files) end with
     # ..and create each text file and populate it with its own vocab
@@ -44,7 +44,33 @@ def only_verbs_please (doc):
                 if token.pos_ == "VERB":
                     f.write(token.lemma_ + " ")
                         
-remove_uneeded(doc)
+def divide_inputs (doc):
+    #divides the input list into a list of lists , each smaller list consisting of the list of words in one item you wish to remember from the original larger list
+    divided_input_list = list()
+    start = -1
+    end = -1
+    for token in doc:
+        if token.text == ",":
+            end = token.i
+            print (end)
+            divided_input_list.append(list(doc[start:end]))
+            start = -1
+            end = -1
+        elif start == -1:
+            start = token.i
+        elif token.i == (len(doc)-1):
+            end = token.i + 1
+            divided_input_list.append(list(doc[start:end]))
+            print(divided_input_list)
+            return divided_input_list
+            
+
+
+
+
+
+
+
 
 #freq = doc[0:1]._.s2v_freq
 #vector = doc[0:1]._.s2v_vec

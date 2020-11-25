@@ -31,8 +31,9 @@ The given list is passed in along with the vocabulary that you want to use in th
 3. ***For now*** 
 -When you run the main.py you will create multiple text documents that consist of only words that each start with the same letter as the first letter of every word in the list you wish to remember. 
 -This narrows our search for us to then find and return a list of words each starting with the first letter of your input list to remember.
--The programme will also consider each word in each item of the list and try to return similar words for words in the same item. This is to aid in developing the memory palace.
-- The output seems to fit the input list but I have not spent time evaluating it just yet.
+-The user will then be asked to supply a theme (one word such as food, art, sport or any other non-proper noun)
+-A list will be printed and it will contain a word that starts with every letter in the input list but is also the most similar unique word to fit the theme within the provided vocabulary.
+
 
 ### Issues
 
@@ -40,8 +41,8 @@ There are multiple obvious issues right now even before rigorous testing
 1) Multiple nested for loops, this program could be much more efficient
 2) Use of only functions in one main class - again cleaner code would read much easier
 3) Now in regards the output list I have some passing observations
-    - The random function which is supposed to currentlyt allow for a different list with each run of the program doesn't seem to work as "to" is always at index 0 of the output list
-    - The output list does not account for words begining with letters that are not in the vocabulary
-    - Words are repeated
+    - The input and output are to the terminal
+    - The output list does not account for words begining with letters that are not in the vocabulary - x is a big problem as there isn't a single word begining with x in the top 10000 most common english words
+    - The program throws a warning about the use of `.similarity`
 
 

@@ -7,7 +7,7 @@ import random;
 nlp = spacy.load("en_core_web_md")
 s2v = Sense2VecComponent(nlp.vocab).from_disk("C:/FinalYear/FYP/s2v_old")
 nlp.add_pipe(s2v)
-with open("memorypalace/to_remember/input_list.txt","r", encoding="utf-8") as f:
+with open("memorypalace/input_list/input_list.txt","r", encoding="utf-8") as f:
         TEXT = f.read()
 doc = nlp(TEXT)
 
@@ -17,7 +17,6 @@ def list_of_files (doc):
     for token in doc:
         if token.text.isalpha():
             text_files.append ("text" + (str(token.text[0])).lower() + ".txt")
-    print(set(text_files))
     return set(text_files)
     
 def find_all_begining_with (doc):
@@ -64,37 +63,49 @@ def divide_inputs (doc):
             return divided_input_list
 
 def find_similar(div_in_list):
-    #For each element in the divided list it aims to find a random first word with the same first letter to the first word of the input list and..
-    # ...the words similar to that first word but with the same first letter as the rest of the input list
-    #(I know its hard for me to make sense of that comment too but once I properly test the function out I'll fix it)
+    #this asks for a one word theme from the user and returns the most similar unique word that starts with the same letter for every word in the input list
+    #there is currently an unrequired for loop, and it throws warnings about the .simalrity 
     result = list()
+    theme = input("Please enter the one word theme you wish the ouput list to have(for example food or art): ")
     for lst in div_in_list:
         doc = nlp(str(lst))
-        main_token = doc[(random.randrange(0,len(lst)))]
+        docu = nlp(theme)
+        main_token = docu[0]
         x = 0
-        for token in doc:
+        for in_token in doc:
+            word_to_append = in_token.text
             similarity = 0
-            if token.is_punct or token.text == "'s":
+            if not in_token.text.isalpha():
                 x=x
-            else:
-                with open(("memorypalace/textfiles/text" + (str(token.text[0])).lower() + ".txt") , "r", encoding="utf-8") as f:
+            elif x == 0:
+                x = 1
+                with open(("memorypalace/textfiles/text" + (str(in_token.text[0])).lower() + ".txt") , "r", encoding="utf-8") as f:
                     avail_vocab = nlp(f.read())
-                    if x == 0:
-                        token = avail_vocab[0]
-                        result.append(token.text)
-                        x = 1 
-                    else:
-                        for token in avail_vocab:
-                            if token.i == (len(doc)-1):
-                                if main_token.similarity(token) > similarity:
-                                    similarity = main_token.similarity(token)
-                                    word_to_append = token
-                                    result.append(word_to_append.text)
-                                else:
-                                    result.append(word_to_append.text)
-                            elif main_token.similarity(token) > similarity and not token.is_punct:
+                    for token in avail_vocab:
+                        if token.i == (len(avail_vocab)-1):
+                            if main_token.similarity(token) > similarity and result.count(token.text) == 0:
                                 similarity = main_token.similarity(token)
                                 word_to_append = token
+                                result.append(word_to_append.text)
+                            else:
+                                result.append(word_to_append.text)
+                        elif main_token.similarity(token) > similarity and not token.is_punct and result.count(token.text) == 0:
+                            similarity = main_token.similarity(token)
+                            word_to_append = token
+            else:
+                with open(("memorypalace/textfiles/text" + (str(in_token.text[0])).lower() + ".txt") , "r", encoding="utf-8") as f:
+                    avail_vocab = nlp(f.read())
+                    for token in avail_vocab:
+                        if token.i == (len(avail_vocab)-1):
+                            if main_token.similarity(token) > similarity and result.count(token.text) == 0:
+                                similarity = main_token.similarity(token)
+                                word_to_append = token
+                                result.append(word_to_append.text)
+                            else:
+                                result.append(word_to_append.text)
+                        elif main_token.similarity(token) > similarity and not token.is_punct and result.count(token.text) == 0:
+                            similarity = main_token.similarity(token)
+                            word_to_append = token
     return result
 
 

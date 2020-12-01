@@ -5,7 +5,7 @@ from sense2vec import Sense2VecComponent
 
 
 nlp = spacy.load("en_core_web_md")
-s2v = Sense2VecComponent(nlp.vocab).from_disk("C:/FinalYear/FYP/s2v_old")
+s2v = Sense2VecComponent(nlp.vocab).from_disk("C:/FinalYear/FYP Stuff/Pre-Trained Vectors")
 nlp.add_pipe(s2v)
 with open("v.00/input_list/input_list.txt","r", encoding="utf-8") as f:
         TEXT = f.read()

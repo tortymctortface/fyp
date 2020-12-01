@@ -7,7 +7,7 @@ from sense2vec import Sense2VecComponent
 nlp = spacy.load("en_core_web_md")
 s2v = Sense2VecComponent(nlp.vocab).from_disk("C:/FinalYear/FYP Stuff/Pre-Trained Vectors")
 nlp.add_pipe(s2v)
-with open("input_list/input_list.txt","r", encoding="utf-8") as f:
+with open("backend/v.00/input_list/input_list.txt","r", encoding="utf-8") as f:
         TEXT = f.read()
 doc = nlp(TEXT)
 
@@ -22,12 +22,12 @@ def list_of_files (doc):
 def find_all_begining_with (doc):
     #take your entire vocab and find all words in it that begin with the same letter that each of the text_files (created in list_of_files) end with
     # ..and create each text file and populate it with its own vocab
-    with open("vocab/vocab.txt","r", encoding="utf-8") as f:
+    with open("backend/v.00/vocab/vocab.txt","r", encoding="utf-8") as f:
         vocab_list=list(f.readlines())
         #vocab_list =["ant", "apple", "arch", "arm", "army", "baby", "bag", "ball", "band", "basin", "basket", "bath", "bed", "bee", "bell", "berry", "bird", "blade", "board", "boat", "bone", "book", "boot", "bottle", "box", "boy", "brain", "brake", "branch", "brick", "bridge", "brush", "bucket", "bulb", "button", "cake", "camera","card", "cart", "carriage", "cat", "chain", "cheese", "chest", "chin", "church", "circle", "clock", "cloud", "coat", "collar", "comb", "cord", "cow", "cup", "curtain", "cushion", "dog", "door", "drain", "drawer", "dress", "drop", "ear", "egg", "engine", "eye", "face", "farm", "feather", "finger", "fish", "flag", "floor", "fly", "foot", "fork", "fowl", "frame", "garden", "girl", "glove", "goat", "gun", "hair", "hammer", "hand", "hat", "head", "heart", "hook", "horn", "horse", "hospital", "house", "island", "jewel", "kettle", "key", "knee", "knife", "knot", "leaf", "leg", "library", "line", "lip", "lock", "map", "match", "monkey", "moon", "mouth", "muscle", "nail", "neck", "needle", "nerve", "net", "nose", "nut", "office", "orange", "oven", "parcel", "pen", "pencil", "picture", "pig", "pin", "pipe", "plane", "plate", "plough", "pocket", "pot", "potato", "prison", "pump", "rail", "rat", "receipt", "ring", "rod", "roof", "root", "sail", "school", "scissors", "screw", "seed", "sheep", "shelf", "ship", "shoe", "skin", "snake", "sock", "spade", "sponge", "spoon", "spring", "square", "stamp", "star", "station", "stem", "stick", "stocking", "stomach", "store", "street", "sun", "table", "tail", "thread", "throat", "thumb", "ticket", "toe", "tongue", "tooth", "town", "train", "tray", "tree", "trousers", "umbrella", "wall", "watch", "wheel", "whip", "whistle", "window", "wing", "wire", "worm"]
         text_files = list_of_files(doc)
         for file in text_files:
-            with open(("textfiles/"+ file) , "w+", encoding="utf-8") as f:
+            with open(("backend/v.00/textfiles/"+ file) , "w+", encoding="utf-8") as f:
                 for string in vocab_list:
                     if string[0].lower() == file[4]:
                         f.write(string + " ")
@@ -38,10 +38,10 @@ def only_verbs_please (doc):
     #for every text file populated in find_all_begining_with process each one in the nlp pipeline
     #... and re-populate each file, this time only using the available verbs
     for file in find_all_begining_with(doc):
-        with open(("textfiles/"+ file),"r", encoding="utf-8") as f:
+        with open(("backend/v.00/textfiles/"+ file),"r", encoding="utf-8") as f:
             TEXT = f.read()
             docu = nlp(TEXT)
-        with open(("textfiles/"+ file),"w", encoding="utf-8") as f:
+        with open(("backend/v.00/textfiles/"+ file),"w", encoding="utf-8") as f:
             for token in docu:
                 if token.pos_ == "VERB":
                     f.write(token.lemma_ + " ")
@@ -81,7 +81,7 @@ def find_similar(div_in_list):
                 x=x
             elif x == 0:
                 x = 1
-                with open(("textfiles/text" + (str(in_token.text[0])).lower() + ".txt") , "r", encoding="utf-8") as f:
+                with open(("backend/v.00/textfiles/text" + (str(in_token.text[0])).lower() + ".txt") , "r", encoding="utf-8") as f:
                     avail_vocab = nlp(f.read())
                     for token in avail_vocab:
                         if token.i == (len(avail_vocab)-1):
@@ -95,7 +95,7 @@ def find_similar(div_in_list):
                             similarity = main_token.similarity(token)
                             word_to_append = token
             else:
-                with open(("textfiles/text" + (str(in_token.text[0])).lower() + ".txt") , "r", encoding="utf-8") as f:
+                with open(("backend/v.00/textfiles/text" + (str(in_token.text[0])).lower() + ".txt") , "r", encoding="utf-8") as f:
                     avail_vocab = nlp(f.read())
                     for token in avail_vocab:
                         if token.i == (len(avail_vocab)-1):

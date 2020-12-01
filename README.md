@@ -52,8 +52,11 @@ To learn more about the technolgies used in this project here are some useful li
 
 [Flask setup](https://blog.miguelgrinberg.com/post/how-to-create-a-react--flask-project) - Web framework
 
+<details>
+
 ## v.00
 
+<br>
 Version 0 only provides a console output and is not connected to the React app.
 
 #### How it works
@@ -76,10 +79,16 @@ There are multiple obvious issues right now even before rigorous testing
    - The output list does not account for words begining with letters that are not in the vocabulary - x is a big problem as there isn't a single word begining with x in the top 10000 most common english words
    - The program throws a warning about the use of `.similarity`
 
+</details>
+<details>
+
 ## v.01
 
+<br>
 Version 1 of this application has been built to include a frontend application built with React. This is for ease of use of the user and also for presentaion and explanation purposes.
 
 #### How it works#
 
 As of now it is only a test function to confirm that the app is handling the api requests correctly
+
+</details>

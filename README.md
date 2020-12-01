@@ -52,17 +52,14 @@ To learn more about the technolgies used in this project here are some useful li
 
 [Flask setup](https://blog.miguelgrinberg.com/post/how-to-create-a-react--flask-project) - Web framework
 
-<details>
+<v.00>
 
-## v.00
-
-<br>
 Version 0 only provides a console output and is not connected to the React app.
 
 #### How it works
 
-1. Add a list of anything you wish to remeber to the `\memorypalace\to_remember\input_list.txt` file - as an example I have added the Nobel Peace Prize Winners from 2000 to 2020. The file should have each item you wish to remember separated by a **,** and if there are multiple parts to an item (for example more than one Nobel Peace Prize Winner in a single year) then each part should be separated with the word **and**
-2. Add the vocabulary you wish to be considered for use in the memory map to the `\memorypalace\vocab\vocab.txt` file - remember the bigger the better (I have added the 10,000 most common English words as an example)
+1. Add a list of anything you wish to remeber to the `S2V Project\backend\v.00\input_list\input_list.txt` file - as an example I have added the Nobel Peace Prize Winners from 2000 to 2020. The file should have each item you wish to remember separated by a **,** and if there are multiple parts to an item (for example more than one Nobel Peace Prize Winner in a single year) then each part should be separated with the word **and**
+2. Add the vocabulary you wish to be considered for use in the memory map to the `S2V Project\backend\v.00\vocab\vocab.txt` file - remember the bigger the better (I have added the 10,000 most common English words as an example)
 3. - When you run the main.py you will create multiple text documents that consist of only words that each start with the same letter as the first letter of every word in the list you wish to remember.
    - This narrows our search for us to then find and return a list of words each starting with the first letter of your input list to remember.
    - The user will then be asked to supply a theme (one word such as food, art, sport or any other non-proper noun)
@@ -79,16 +76,13 @@ There are multiple obvious issues right now even before rigorous testing
    - The output list does not account for words begining with letters that are not in the vocabulary - x is a big problem as there isn't a single word begining with x in the top 10000 most common english words
    - The program throws a warning about the use of `.similarity`
 
-</details>
-<details>
+</v.00>
+<v.01>
 
-## v.01
-
-<br>
 Version 1 of this application has been built to include a frontend application built with React. This is for ease of use of the user and also for presentaion and explanation purposes.
 
 #### How it works#
 
 As of now it is only a test function to confirm that the app is handling the api requests correctly
 
-</details>
+</v.01>

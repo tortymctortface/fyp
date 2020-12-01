@@ -1,6 +1,4 @@
-# FYP - Matthew Duffy
-
-## General project overview
+# General project overview
 
 #### This project aims use the Sense2Vec NLP method to create an application that is capable of:
 
@@ -16,7 +14,7 @@
     *Using a structure and phonetics in a way that could sound rhythmic like lyrics to a song or a poem. This way the possibility of converting a list of family names of AD patients and converting them into a song or poem which could be listened to or read by/to the patient regularly to possibly allow for recall of the song/poem as AD progresses and then in turn the recall of family names from that.
     *The most advanced solution would account for all three outputs, allowing for future work in the development of VR memory palaces, possible research into memory preservation in patients with AD and also to simply aid users in the creation of personal memory palaces.
 
-## Setup
+# Setup
 
 The front end of this project was bootstrapped with create-react-app. The backend is built in Python, with spaCy as the nlp library. The backend is connected to the React app with the help of Flask.
 
@@ -32,7 +30,7 @@ The front end of this project was bootstrapped with create-react-app. The backen
 
 You will also need to install the pre-trained vectors (either the 2015 or 2019 set) [here](https://github.com/explosion/sense2vec#pretrained-vectors)
 
-#### Running the cloned project
+#### Running the cloned project locally
 
 1. After cloning this repo, run `npm install` in your `S2v folder`. This will install all the necessary dependencies that are not uploaded to the repo thanks to the gitignore file.
 2. Once you have installed the pre-trained vectors you will need to copy its filepath and paste it into `line 7` of the `app.py` file of the version you wish to run
@@ -51,6 +49,8 @@ To learn more about the technolgies used in this project here are some useful li
 [React basics](https://reactjs.org/tutorial/tutorial.html) - Frontend
 
 [Flask setup](https://blog.miguelgrinberg.com/post/how-to-create-a-react--flask-project) - Web framework
+
+# Versions
 
 <details>
 
@@ -87,7 +87,7 @@ There are multiple obvious issues right now even before rigorous testing
 <br>
 Version 1 of this application has been built to include a frontend application built with React. This is for ease of use of the user and also for presentaion and explanation purposes.
 
-#### How it works#
+#### How it works
 
 As of now it is only a test function to confirm that the app is handling the api requests correctly
 

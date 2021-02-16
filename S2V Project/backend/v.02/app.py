@@ -17,9 +17,9 @@ doc = nlp(TEXT)
 #set theme to be used for similarity comparison (between -2 and 2)
 theme = "food"
 #set the max value of weighting associated to a perfectly matched rhyming word
-rhyme_weighting  = 0.3
+rhyme_weighting  = 0.1
 #set the value associated with a matching secound letter
-second_letter_weight = 0.1
+second_letter_weight = 0.05
 #################################################################
 
 def list_of_files (doc):
@@ -77,33 +77,19 @@ def find_similar(div_in_list):
             similarity = 0
             if not in_token.text.isalpha():
                 x=x
-            elif x == 0:
+            else:
                 x = 1
                 with open(("backend/v.02/textfiles/text" + (str(in_token.text[0])).lower() + ".txt") , "r", encoding="utf-8") as f:
                     avail_vocab = nlp(f.read())
                     for token in avail_vocab:
                         if token.i == (len(avail_vocab)-1):
-                            if (main_token.similarity(token) + phonetic_similarity(main_token.text, token.text)+ secound_letter_value(main_token.text, token.text)) > similarity and result.count(token.text) == 0:
+                            if  token.pos_ != "VERB" and (main_token.similarity(token) + phonetic_similarity(main_token.text, token.text)+ secound_letter_value(main_token.text, token.text)) > similarity and result.count(token.text) == 0:
                                 similarity = main_token.similarity(token)
                                 word_to_append = token
                                 result.append(word_to_append.text)
                             else:
                                 result.append(word_to_append.text)
-                        elif(main_token.similarity(token) + phonetic_similarity(main_token.text, token.text)+ secound_letter_value(main_token.text, token.text))> similarity and not token.is_punct and result.count(token.text) == 0:
-                            similarity = main_token.similarity(token)
-                            word_to_append = token
-            else:
-                with open(("backend/v.02/textfiles/text" + (str(in_token.text[0])).lower() + ".txt") , "r", encoding="utf-8") as f:
-                    avail_vocab = nlp(f.read())
-                    for token in avail_vocab:
-                        if token.i == (len(avail_vocab)-1):
-                            if (main_token.similarity(token) + phonetic_similarity(main_token.text, token.text)+ secound_letter_value(main_token.text, token.text)) > similarity and result.count(token.text) == 0:
-                                similarity = main_token.similarity(token)
-                                word_to_append = token
-                                result.append(word_to_append.text)
-                            else:
-                                result.append(word_to_append.text)
-                        elif (main_token.similarity(token) + phonetic_similarity(main_token.text, token.text)+ secound_letter_value(main_token.text, token.text))> similarity and not token.is_punct and result.count(token.text) == 0:
+                        elif token.pos_ != "VERB" and (main_token.similarity(token) + phonetic_similarity(main_token.text, token.text)+ secound_letter_value(main_token.text, token.text))> similarity and not token.is_punct and result.count(token.text) == 0:
                             similarity = main_token.similarity(token)
                             word_to_append = token
     return result
@@ -148,34 +134,36 @@ only_verbs_please()
 def fill_story_with_verbs(the_list):
     outlist = list()
     the_list = nlp(str(the_list))
-    numword = 0
-    for word in the_list:
+    midlist = list()
+    for item in the_list:
+        if item.is_alpha:
+            midlist.append(item)
+    x = 0
+    for word in midlist:
         similarity = 0
-        numword += 1
-        if not word.text.isalpha():
-            numword = numword
-        elif numword == (len(the_list)):
+        x += 1
+        if (x) == (len(midlist)):
             outlist.append(word.text)
             break
         else:
+            next_word = midlist[x]
+            verb_to_append = next_word
             outlist.append(word.text)
             with open(("backend/v.02/textfiles/verbs") , "r", encoding="utf-8") as f:
                 vocab = nlp(f.read())
                 for token in vocab:
                     if token.i == (len(vocab)-1):
-                        if (word.similarity(token)) > similarity:
-                            similarity = word.similarity(token)
-                            word_to_append = token
-                            outlist.append(word_to_append.text)
-                            print (outlist)
+                        if ((word.similarity(token) + next_word.similarity(token)) > similarity) and outlist.count(token.text) == 0:
+                            similarity = (word.similarity(token) + next_word.similarity(token))
+                            verb_to_append = token
+                            outlist.append(verb_to_append.text)
                             break
                         else:
-                            outlist.append(word_to_append.text)
-                            print (outlist)
+                            outlist.append(verb_to_append.text)
                             break
-                    elif (word.similarity(token)) > similarity:
-                        similarity = word.similarity(token)
-                        word_to_append = token
+                    elif ((word.similarity(token) + next_word.similarity(token)) > similarity) and outlist.count(token.text) == 0:
+                        similarity = (word.similarity(token) + next_word.similarity(token))
+                        verb_to_append = token
     return outlist
 
 print(fill_story_with_verbs(the_list))

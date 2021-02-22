@@ -5,6 +5,7 @@ from sense2vec import Sense2VecComponent
 import phonetics
 import enchant
 import warnings
+import csv
 
 #################################################################
 # Weights to be used in each of the following functions
@@ -14,7 +15,7 @@ theme = "sex"
 #set the max value of weighting associated to a perfectly matched rhyming word
 rhyme_weighting  = 0.1
 #set the value associated with a matching secound letter
-second_letter_weight = 0.05
+secound_letter_weighting = 0.05
 #################################################################
 
 #Instantiate English pipeline object
@@ -92,8 +93,16 @@ def create_output_list(doc, in_theme):
                             similarity = theme.similarity(token)
                         except: 
                             similarity = 0
+                        phonetic_score = phonetic_weight(theme.text, token.text)
+                        secound_letter_score = secound_letter_weight(theme.text, token.text)
                         #total weighted similarity score - stored so that it does not need to be computed more than once as .similarity is computationally quite heavy
-                        total_similarity = similarity + phonetic_weight(theme.text, token.text)+ secound_letter_weight(theme.text, token.text)
+                        total_similarity = similarity + phonetic_score+ secound_letter_score
+                        with open("backend/v.02/output/output.csv", mode='a') as csv_file:
+                            fieldnames = ['Word', 'Total', 'Word/Theme Similarity', 'Phonetic Similarity','Secound letter weight']
+                            writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+
+                            writer.writeheader()
+                            writer.writerow({'Word':token.text, 'Total': total_similarity, 'Word/Theme Similarity': similarity, 'Phonetic Similarity': phonetic_score, 'Secound letter weight': secound_letter_score})
                         #if else to handle filling the output list with the words with the highest total_similarity score
                         if token.i == (len(avail_vocab)-1): 
                             if total_similarity > s2v_similarity and result.count(token.text) == 0:
@@ -111,7 +120,7 @@ def secound_letter_weight(wordone, wordtwo):
     #The weight of this score can be set above.If the secons letter is a match between the input word and the word that will possibly be used to represent it then a smal positive weighting is applied
     if (len(wordone) > 1) and (len(wordtwo) > 1):
         if (wordone[1] == wordtwo[1]):
-            return second_letter_weight
+            return secound_letter_weighting
         else:
             return 0
     else:

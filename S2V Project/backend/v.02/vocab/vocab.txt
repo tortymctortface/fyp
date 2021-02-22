@@ -9997,4 +9997,4 @@ rucksack
 rudimentary
 ruinous
 ruse
-
+afford

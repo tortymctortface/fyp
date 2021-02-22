@@ -54,10 +54,10 @@ To learn more about the technolgies used in this project here are some useful li
 
 <details>
 
-<summary> v.00 </summary>
+<summary> v.01 </summary>
 
 <br>
-Version 0 only provides a console output and is not connected to the React app.
+Version 1 only provides a console output and is not connected to the React app.
 
 #### How it works
 
@@ -82,13 +82,16 @@ There are multiple obvious issues right now even before rigorous testing
 </details>
 <details>
 
-<summary> v.01 </summary>
+<summary> v.02 </summary>
 
 <br>
-Version 1 of this application has been built to include a frontend application built with React. This is for ease of use of the user and also for presentaion and explanation purposes.
+Version 2 provides a console output as well as an output of scores to a csv file. v.02 is also not connected to the React app but it has had many more features added, including a weighted scoring function, along with testing a new way to calaculate word similarity. It also now finds the common most similar verb to connect each neighbouring word in the create list. The errors from handling empty vectors from version 1 is also fixed and the code is much more readable. The theme is no longer a user input, it is set along with the other weights in the code. 
 
 #### How it works
 
-As of now it is only a test function to confirm that the app is handling the api requests correctly
+As of now it works almost the same as version 1 (see above for general instructions). The main differences for the end user are :
+   1. User input theme is no longer needed
+   2. There is now a CSV file output to track individual word scores as well as the terminal output
+   3. Users can edit the three weights in `app.py` on lines 12, 14 and 16.
 
 </details>

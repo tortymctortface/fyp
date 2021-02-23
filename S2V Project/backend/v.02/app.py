@@ -13,7 +13,7 @@ import csv
 #set theme to be used for s2v_similarity comparison (between -2 and 2)
 theme = "food"
 #set the max value of weighting associated to a perfectly matched rhyming word
-rhyme_weighting  = 0.1
+rhyme_weighting  = 0.2
 #set the value associated with a matching secound letter
 secound_letter_weighting = 0.05
 #################################################################
@@ -26,7 +26,7 @@ s2v = Sense2VecComponent(nlp.vocab).from_disk("C:/fyp/s2v_reddit_2019_lg")
 nlp.add_pipe(s2v)
 #read in and process the input list the user wants to remember
 with open("backend/v.02/input_list/input_list.txt","r", encoding="utf-8") as f:
-        TEXT = f.read()
+    TEXT = f.read()
 doc = nlp(TEXT)
 
 def create_first_letter_files(doc):
@@ -44,6 +44,9 @@ def create_first_letter_files(doc):
                 for token in vocab_list:
                     if (token.text[0].lower() == file[4]) and not (token.pos_=="SPACE" or token.pos_=="CCONJ" or token.pos_=="DET" or token.pos_=="ADP" or token.pos_=="SCONJ" or token.pos_=="AUX" or token.pos_=="ADV" or token.pos_=="VERB"  or token.pos_=="PRON" or token.pos_=="PUNCT"):
                         f.write(token.lemma_  + " ")
+                f.close()
+        f.close()
+        
                         
 def split_input_list (doc):
     #divides the input list into a list of lists , each smaller list consisting of the list of words in one item you wish to remember from the original larger list
@@ -72,6 +75,9 @@ def create_output_list(doc, in_theme):
     result = list()
     docu = nlp(in_theme)
     theme = docu[0]
+    #make sure to empty csv file from previous runs
+    with open("backend/v.02/output/output.csv", mode='w+') as f:
+        f.close()
     #theme = input("Please enter the one word theme you wish the ouput list to have(for example food or art): ")
     for lst in div_in_list:
         doc = nlp(str(lst))
@@ -83,6 +89,8 @@ def create_output_list(doc, in_theme):
             s2v_similarity = 0
             if not in_token.text.isalpha():
                 x=x
+            elif in_token.pos_ == "DET" or in_token.pos_ == "CCONJ" or in_token.pos_ == "ADP":
+                result.append(in_token.text)
             else:
                 x = 1
                 with open(("backend/v.02/textfiles/text" + (str(in_token.text[0])).lower() + ".txt") , "r", encoding="utf-8") as f:
@@ -95,8 +103,8 @@ def create_output_list(doc, in_theme):
                             similarity = theme.similarity(token)
                         except: 
                             similarity = 0
-                        phonetic_score = phonetic_weight(theme.text, token.text)
-                        secound_letter_score = secound_letter_weight(theme.text, token.text)
+                        phonetic_score = phonetic_weight(in_token.text, token.text)
+                        secound_letter_score = secound_letter_weight(in_token.text, token.text)
                         #total weighted similarity score - stored so that it does not need to be computed more than once as .similarity is computationally quite heavy
                         total_similarity = similarity + phonetic_score+ secound_letter_score
                         #if else to handle filling the output list with the words with the highest total_similarity score
@@ -116,6 +124,7 @@ def create_output_list(doc, in_theme):
                             word3 = word2
                             word2 = word_to_append
                             word_to_append = token
+                    f.close()
     return result
 
 def create_output_csv(original,w1,w2,w3,theme):
@@ -126,14 +135,14 @@ def create_output_csv(original,w1,w2,w3,theme):
     topthreelist = nlp(str(topthreelist))
     x = 1
     with open("backend/v.02/output/output.csv", mode='a') as csv_file:
-                fieldnames = ['Orignal Word', 'Theme']
-                writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-                writer.writerow({'Orignal Word':original,'Theme': theme.text})
+        fieldnames = ['Original Word', 'Theme']
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+        writer.writerow({'Original Word':original,'Theme': theme.text})
     for word in topthreelist:
         if word.is_alpha:
             similarity = theme.similarity(word)
-            phonetic_score = phonetic_weight(theme.text, word.text)
-            secound_letter_score = secound_letter_weight(theme.text, word.text)
+            phonetic_score = phonetic_weight(original, word.text)
+            secound_letter_score = secound_letter_weight(original, word.text)
             #total weighted similarity score - stored so that it does not need to be computed more than once as .similarity is computationally quite heavy
             total_similarity = similarity + phonetic_score+ secound_letter_score
             with open("backend/v.02/output/output.csv", mode='a') as csv_file:
@@ -141,7 +150,10 @@ def create_output_csv(original,w1,w2,w3,theme):
                 writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
                 writer.writeheader()
                 writer.writerow({'Rated':x,'Output Word':word.text, 'Total': total_similarity, 'Word/Theme Similarity': similarity, 'Phonetic Similarity': phonetic_score, 'Secound letter weight': secound_letter_score})
+                csv_file.close()
             x += 1
+        csv_file.close()
+
 
 
 def secound_letter_weight(wordone, wordtwo):
@@ -171,9 +183,11 @@ def create_verbs_only_file ():
     with open("backend/v.02/vocab/vocab.txt","r", encoding="utf-8") as f:
         vocab = nlp(f.read())
         with open(("backend/v.02/textfiles/verbs") , "w+", encoding="utf-8") as f:
-                for token in vocab:
-                    if token.pos_ == "VERB":
-                        f.write(token.lemma_ + " ")
+            for token in vocab:
+                if token.pos_ == "VERB":
+                    f.write(token.lemma_ + " ")
+            f.close()
+        f.close()
 
 def add_similar_verbs_to_output_list(the_list):
     #verbs added to pre-created output list. Verbs added are unique and will take into account the preceeding and succeding word in the list.
@@ -220,6 +234,7 @@ def add_similar_verbs_to_output_list(the_list):
                     elif (similarity > s2v_similarity) and outlist.count(token.text) == 0 and string_list.count(token.text) == 0:
                         s2v_similarity = similarity
                         verb_to_append = token
+                f.close()
     return outlist
 
 #the_list = ['alcohol', 'agriculture', 'drink', 'meal', 'accommodation', 'nutrition', 'meat', 'inedible', 'cooking', 'takeout', 'animal', 'nutrient', 'wheat', 'junk', 'medicine', 'soup', 'toothpaste', 'needy', 'dish', 'quail', 'ketchup', 'seafood', 'asparagus', 'milk', 'yogurt', 'transportation', 'oatmeal', 'food', 'tea', 'pork', 'omelette', 'cuisine', 'wine', 'tuna', 'eaten', 'upbrining', 'entertainment', 'jewellery', 'soda', 'appetizing', 'loaf', 'gourmet', 'amenity', 'tobacco', 'kitchen', 'liquor', 'booze', 'onion', 'morsel', 'agricultural', 'aid', 'goods', 'appetite', 'tomato', 'urine', 'iodine', 'poultry', 'oil', 'coffee', 'condiment', 'meatloaf', 'yummy', 'ammunition', 'tongs', 'gruel', 'bread', 'ingredient', 'allowance', 'edible', 'affection', 'antibiotic', 'mutton', 'eatable', 'waiter', 'margarine', 'steak', 'electricity', 'jobless', 'cutlery', 'knives', 'aroma', 'appliance', 'tasting', 'unhealthy', 'nanny', 'kitty', 'dinner', 'juice']

@@ -91,7 +91,7 @@ Version 2 provides a console output as well as an output of scores to a csv file
 
 As of now it works almost the same as version 1 (see above for general instructions). The main differences for the end user are :
    1. User input theme is no longer needed
-   2. There is now a CSV file output to track individual word scores as well as the terminal output
-   3. Users can edit the three weights in `app.py` on lines 12, 14 and 16.
+   2. There is now a CSV file output to track individual word scores and this displays the top three possible word matches
+   3. Users can edit the three weights in `app.py` at the top of the file : theme, phonetic and second letter.
 
 </details>

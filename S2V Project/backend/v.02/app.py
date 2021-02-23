@@ -11,7 +11,7 @@ import csv
 # Weights to be used in each of the following functions
 #################################################################
 #set theme to be used for s2v_similarity comparison (between -2 and 2)
-theme = "sex"
+theme = "food"
 #set the max value of weighting associated to a perfectly matched rhyming word
 rhyme_weighting  = 0.1
 #set the value associated with a matching secound letter
@@ -78,6 +78,8 @@ def create_output_list(doc, in_theme):
         x = 0
         for in_token in doc:
             word_to_append = in_token
+            word2 = ""
+            word3 = ""
             s2v_similarity = 0
             if not in_token.text.isalpha():
                 x=x
@@ -97,24 +99,50 @@ def create_output_list(doc, in_theme):
                         secound_letter_score = secound_letter_weight(theme.text, token.text)
                         #total weighted similarity score - stored so that it does not need to be computed more than once as .similarity is computationally quite heavy
                         total_similarity = similarity + phonetic_score+ secound_letter_score
-                        with open("backend/v.02/output/output.csv", mode='a') as csv_file:
-                            fieldnames = ['Word', 'Total', 'Word/Theme Similarity', 'Phonetic Similarity','Secound letter weight']
-                            writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-
-                            writer.writeheader()
-                            writer.writerow({'Word':token.text, 'Total': total_similarity, 'Word/Theme Similarity': similarity, 'Phonetic Similarity': phonetic_score, 'Secound letter weight': secound_letter_score})
                         #if else to handle filling the output list with the words with the highest total_similarity score
                         if token.i == (len(avail_vocab)-1): 
                             if total_similarity > s2v_similarity and result.count(token.text) == 0:
                                 s2v_similarity = total_similarity
+                                word3 = word2
+                                word2 = word_to_append
                                 word_to_append = token
+                                create_output_csv(in_token.text, word_to_append,word2,word3,theme)
                                 result.append(word_to_append.text)
                             else:
+                                create_output_csv(in_token.text, word_to_append,word2,word3,theme)
                                 result.append(word_to_append.text)
                         elif total_similarity > s2v_similarity and not token.is_punct and result.count(token.text) == 0:
                             s2v_similarity = total_similarity
+                            word3 = word2
+                            word2 = word_to_append
                             word_to_append = token
     return result
+
+def create_output_csv(original,w1,w2,w3,theme):
+    topthreelist = list()
+    topthreelist.append(w1)
+    topthreelist.append(w2)
+    topthreelist.append(w3)
+    topthreelist = nlp(str(topthreelist))
+    x = 1
+    with open("backend/v.02/output/output.csv", mode='a') as csv_file:
+                fieldnames = ['Orignal Word', 'Theme']
+                writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+                writer.writerow({'Orignal Word':original,'Theme': theme.text})
+    for word in topthreelist:
+        if word.is_alpha:
+            similarity = theme.similarity(word)
+            phonetic_score = phonetic_weight(theme.text, word.text)
+            secound_letter_score = secound_letter_weight(theme.text, word.text)
+            #total weighted similarity score - stored so that it does not need to be computed more than once as .similarity is computationally quite heavy
+            total_similarity = similarity + phonetic_score+ secound_letter_score
+            with open("backend/v.02/output/output.csv", mode='a') as csv_file:
+                fieldnames = ['Rated','Output Word', 'Total', 'Word/Theme Similarity', 'Phonetic Similarity','Secound letter weight']
+                writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerow({'Rated':x,'Output Word':word.text, 'Total': total_similarity, 'Word/Theme Similarity': similarity, 'Phonetic Similarity': phonetic_score, 'Secound letter weight': secound_letter_score})
+            x += 1
+
 
 def secound_letter_weight(wordone, wordtwo):
     #The weight of this score can be set above.If the secons letter is a match between the input word and the word that will possibly be used to represent it then a smal positive weighting is applied

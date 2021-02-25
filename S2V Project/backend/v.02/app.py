@@ -37,7 +37,7 @@ def create_first_letter_files(doc):
             text_files.append ("text" + (str(token.text[0])).lower() + ".txt")
     with open("backend/v.02/vocab/vocab.txt","r", encoding="utf-8") as f:
         vocab_list=nlp(f.read())
-        #vocab_list =["ant", "apple", "arch", "arm", "army", "baby", "bag", "ball", "band", "basin", "basket", "bath", "bed", "bee", "bell", "berry", "bird", "blade", "board", "boat", "bone", "book", "boot", "bottle", "box", "boy", "brain", "brake", "branch", "brick", "bridge", "brush", "bucket", "bulb", "button", "cake", "camera","card", "cart", "carriage", "cat", "chain", "cheese", "chest", "chin", "church", "circle", "clock", "cloud", "coat", "collar", "comb", "cord", "cow", "cup", "curtain", "cushion", "dog", "door", "drain", "drawer", "dress", "drop", "ear", "egg", "engine", "eye", "face", "farm", "feather", "finger", "fish", "flag", "floor", "fly", "foot", "fork", "fowl", "frame", "garden", "girl", "glove", "goat", "gun", "hair", "hammer", "hand", "hat", "head", "heart", "hook", "horn", "horse", "hospital", "house", "island", "jewel", "kettle", "key", "knee", "knife", "knot", "leaf", "leg", "library", "line", "lip", "lock", "map", "match", "monkey", "moon", "mouth", "muscle", "nail", "neck", "needle", "nerve", "net", "nose", "nut", "office", "orange", "oven", "parcel", "pen", "pencil", "picture", "pig", "pin", "pipe", "plane", "plate", "plough", "pocket", "pot", "potato", "prison", "pump", "rail", "rat", "receipt", "ring", "rod", "roof", "root", "sail", "school", "scissors", "screw", "seed", "sheep", "shelf", "ship", "shoe", "skin", "snake", "sock", "spade", "sponge", "spoon", "spring", "square", "stamp", "star", "station", "stem", "stick", "stocking", "stomach", "store", "street", "sun", "table", "tail", "thread", "throat", "thumb", "ticket", "toe", "tongue", "tooth", "town", "train", "tray", "tree", "trousers", "umbrella", "wall", "watch", "wheel", "whip", "whistle", "window", "wing", "wire", "worm"]
+        #vocab_list =nlp(str(["ant", "apple", "arch", "arm", "army", "baby", "bag", "ball", "band", "basin", "basket", "bath", "bed", "bee", "bell", "berry", "bird", "blade", "board", "boat", "bone", "book", "boot", "bottle", "box", "boy", "brain", "brake", "branch", "brick", "bridge", "brush", "bucket", "bulb", "button", "cake", "camera","card", "cart", "carriage", "cat", "chain", "cheese", "chest", "chin", "church", "circle", "clock", "cloud", "coat", "collar", "comb", "cord", "cow", "cup", "curtain", "cushion", "dog", "door", "drain", "drawer", "dress", "drop", "ear", "egg", "engine", "eye", "face", "farm", "feather", "finger", "fish", "flag", "floor", "fly", "foot", "fork", "fowl", "frame", "garden", "girl", "glove", "goat", "gun", "hair", "hammer", "hand", "hat", "head", "heart", "hook", "horn", "horse", "hospital", "house", "island", "jewel", "kettle", "key", "knee", "knife", "knot", "leaf", "leg", "library", "line", "lip", "lock", "map", "match", "monkey", "moon", "mouth", "muscle", "nail", "neck", "needle", "nerve", "net", "nose", "nut", "office", "orange", "oven", "parcel", "pen", "pencil", "picture", "pig", "pin", "pipe", "plane", "plate", "plough", "pocket", "pot", "potato", "prison", "pump", "rail", "rat", "receipt", "ring", "rod", "roof", "root", "sail", "school", "scissors", "screw", "seed", "sheep", "shelf", "ship", "shoe", "skin", "snake", "sock", "spade", "sponge", "spoon", "spring", "square", "stamp", "star", "station", "stem", "stick", "stocking", "stomach", "store", "street", "sun", "table", "tail", "thread", "throat", "thumb", "ticket", "toe", "tongue", "tooth", "town", "train", "tray", "tree", "trousers", "umbrella", "wall", "watch", "wheel", "whip", "whistle", "window", "wing", "wire", "worm"]))
         text_files = set(text_files)
         for file in text_files:
             with open(("backend/v.02/textfiles/"+ file) , "w+", encoding="utf-8") as f:
@@ -76,7 +76,7 @@ def create_output_list(doc, in_theme):
     docu = nlp(in_theme)
     theme = docu[0]
     #make sure to empty csv file from previous runs
-    with open("backend/v.02/output/output.csv", mode='w+') as f:
+    with open("backend/v.02/output/scores.csv", mode='w+') as f:
         f.close()
     #theme = input("Please enter the one word theme you wish the ouput list to have(for example food or art): ")
     for lst in div_in_list:
@@ -125,6 +125,11 @@ def create_output_list(doc, in_theme):
                             word2 = word_to_append
                             word_to_append = token
                     f.close()
+    with open("backend/v.02/output/output.txt", mode='w+') as f:
+        f.write("Output List:")
+        f.write("\n")
+        f.write(str(result))
+        f.close()
     return result
 
 def create_output_csv(original,w1,w2,w3,theme):
@@ -134,7 +139,7 @@ def create_output_csv(original,w1,w2,w3,theme):
     topthreelist.append(w3)
     topthreelist = nlp(str(topthreelist))
     x = 1
-    with open("backend/v.02/output/output.csv", mode='a') as csv_file:
+    with open("backend/v.02/output/scores.csv", mode='a') as csv_file:
         fieldnames = ['Original Word', 'Theme']
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
         writer.writerow({'Original Word':original,'Theme': theme.text})
@@ -145,7 +150,7 @@ def create_output_csv(original,w1,w2,w3,theme):
             secound_letter_score = secound_letter_weight(original, word.text)
             #total weighted similarity score - stored so that it does not need to be computed more than once as .similarity is computationally quite heavy
             total_similarity = similarity + phonetic_score+ secound_letter_score
-            with open("backend/v.02/output/output.csv", mode='a') as csv_file:
+            with open("backend/v.02/output/scores.csv", mode='a') as csv_file:
                 fieldnames = ['Rated','Output Word', 'Total', 'Word/Theme Similarity', 'Phonetic Similarity','Secound letter weight']
                 writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
                 writer.writeheader()
@@ -210,45 +215,44 @@ def add_similar_verbs_to_output_list(the_list):
             outlist.append(word.text)
         else:
             next_word = midlist[x]
-            verb_to_append = next_word
-            outlist.append(word.text)
-            with open(("backend/v.02/textfiles/verbs") , "r", encoding="utf-8") as f:
-                vocab = nlp(f.read())
-                for token in vocab:
-                     #try catch to handle the possibility that a comparison between to words (the theme word and the current word from the vocab) has never occured before
-                    try:
-                        warnings.filterwarnings("ignore", category=UserWarning)
-                        #using the .similarity here instead of ._.s2v_similarity as Ive noticed faster and better results from it
-                        similarity = (word.similarity(token) + next_word.similarity(token))
-                    except:
-                        similarity = 0
-                    if token.i == (len(vocab)-1):
-                        if (similarity > s2v_similarity) and string_list.count(token.text) == 0 and outlist.count(token.text) == 0:
+            if word.pos_ == "DET" or word.pos_ == "CCONJ" or word.pos_ == "ADP" or next_word.pos_ == "DET" or next_word.pos_ == "CCONJ" or next_word.pos_ == "ADP" :
+                outlist.append(word.text)
+            else:
+                verb_to_append = next_word
+                outlist.append(word.text)
+                with open(("backend/v.02/textfiles/verbs") , "r", encoding="utf-8") as f:
+                    vocab = nlp(f.read())
+                    for token in vocab:
+                        #try catch to handle the possibility that a comparison between to words (the theme word and the current word from the vocab) has never occured before
+                        try:
+                            warnings.filterwarnings("ignore", category=UserWarning)
+                            #using the .similarity here instead of ._.s2v_similarity as Ive noticed faster and better results from it
+                            similarity = (word.similarity(token) + next_word.similarity(token))
+                        except:
+                            similarity = 0
+                        if token.i == (len(vocab)-1):
+                            if (similarity > s2v_similarity) and string_list.count(token.text) == 0 and outlist.count(token.text) == 0:
+                                s2v_similarity = similarity
+                                verb_to_append = token
+                                outlist.append(verb_to_append.text)
+                                break
+                            else:
+                                outlist.append(verb_to_append.text)
+                                break
+                        elif (similarity > s2v_similarity) and outlist.count(token.text) == 0 and string_list.count(token.text) == 0:
                             s2v_similarity = similarity
                             verb_to_append = token
-                            outlist.append(verb_to_append.text)
-                            break
-                        else:
-                            outlist.append(verb_to_append.text)
-                            break
-                    elif (similarity > s2v_similarity) and outlist.count(token.text) == 0 and string_list.count(token.text) == 0:
-                        s2v_similarity = similarity
-                        verb_to_append = token
-                f.close()
+                    f.close()
+    with open("backend/v.02/output/output.txt", mode='a') as f:
+        f.write("\n")
+        f.write("\n")
+        f.write("Output List with Verbs:")
+        f.write("\n")
+        f.write(str(outlist))
+        f.close()
     return outlist
 
 #the_list = ['alcohol', 'agriculture', 'drink', 'meal', 'accommodation', 'nutrition', 'meat', 'inedible', 'cooking', 'takeout', 'animal', 'nutrient', 'wheat', 'junk', 'medicine', 'soup', 'toothpaste', 'needy', 'dish', 'quail', 'ketchup', 'seafood', 'asparagus', 'milk', 'yogurt', 'transportation', 'oatmeal', 'food', 'tea', 'pork', 'omelette', 'cuisine', 'wine', 'tuna', 'eaten', 'upbrining', 'entertainment', 'jewellery', 'soda', 'appetizing', 'loaf', 'gourmet', 'amenity', 'tobacco', 'kitchen', 'liquor', 'booze', 'onion', 'morsel', 'agricultural', 'aid', 'goods', 'appetite', 'tomato', 'urine', 'iodine', 'poultry', 'oil', 'coffee', 'condiment', 'meatloaf', 'yummy', 'ammunition', 'tongs', 'gruel', 'bread', 'ingredient', 'allowance', 'edible', 'affection', 'antibiotic', 'mutton', 'eatable', 'waiter', 'margarine', 'steak', 'electricity', 'jobless', 'cutlery', 'knives', 'aroma', 'appliance', 'tasting', 'unhealthy', 'nanny', 'kitty', 'dinner', 'juice']
 the_list = create_output_list(doc,theme)
-print(the_list)
-print(add_similar_verbs_to_output_list(the_list))
+add_similar_verbs_to_output_list(the_list)
                     
-
-
-            
-
-
-             
-#freq = doc[0:1]._.s2v_freq
-#vector = doc[0:1]._.s2v_vec
-#most_similar = doc[0:1]._.s2v_most_similar(10)
-#vocab_list = list(nlp.vocab.strings)

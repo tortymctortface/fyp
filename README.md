@@ -85,7 +85,7 @@ There are multiple obvious issues right now even before rigorous testing
 <summary> v.02 </summary>
 
 <br>
-Version 2 provides a console output as well as an output of scores to a csv file. v.02 is also not connected to the React app but it has had many more features added, including a weighted scoring function, along with testing a new way to calaculate word similarity. It also now finds the common most similar verb to connect each neighbouring word in the create list. The errors from handling empty vectors from version 1 is also fixed and the code is much more readable. The theme is no longer a user input, it is set along with the other weights in the code. 
+Version 2 provides two outputs. It will present both your ouput list of words based on the given weightings of each of the three scores, as well as an output of the top three scoring words to a csv file. v.02 is also not connected to the React app but it has had many more features added, including a weighted scoring function, along with testing a new way to calaculate word similarity. It also now finds the common most similar verb to connect each neighbouring word in the create list. The errors from handling empty vectors from version 1 are also fixed and the code is much more readable. The theme is no longer a user input, it is set along with the other weights in the code. 
 
 #### How it works
 

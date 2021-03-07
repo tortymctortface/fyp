@@ -42,13 +42,15 @@ You will also need to install the pre-trained vectors (either the 2015 or 2019 s
 
 To learn more about the technolgies used in this project here are some useful links:
 
-[Python 101](https://www.youtube.com/watch?v=rfscVS0vtbw) - Backend
+[spaCy 101](https://course.spacy.io/en) - NLP
 
-[spaCy 101](https://course.spacy.io/en) - NLP processing
+[Python 101](https://www.youtube.com/watch?v=rfscVS0vtbw) - For the backend
 
-[React basics](https://reactjs.org/tutorial/tutorial.html) - Frontend
+[Django](https://www.youtube.com/channel/UC4JX40jDee_tINbkjycV4Sg) - Backend Framework
 
-[Flask setup](https://blog.miguelgrinberg.com/post/how-to-create-a-react--flask-project) - Web framework
+[JavaScript](https://www.youtube.com/watch?v=W6NZfCO5SIk&t=101s&ab_channel=ProgrammingwithMosh) - For the frontend
+
+[React basics](https://reactjs.org/tutorial/tutorial.html) - Frontend framework
 
 # Versions
 

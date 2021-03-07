@@ -11,11 +11,11 @@ import csv
 # Weights to be used in each of the following functions
 #################################################################
 #set theme to be used for s2v_similarity comparison (between -2 and 2)
-theme = "food"
+theme = "zoo"
 #set the max value of weighting associated to a perfectly matched rhyming word
-rhyme_weighting  = 0.2
+rhyme_weighting  = 0.9
 #set the value associated with a matching secound letter
-secound_letter_weighting = 0.05
+secound_letter_weighting = 0.80
 #################################################################
 
 #Instantiate English pipeline object

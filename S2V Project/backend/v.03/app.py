@@ -11,11 +11,11 @@ import csv
 # Weights to be used in each of the following functions
 #################################################################
 #set theme to be used for s2v_similarity comparison (between -2 and 2)
-theme = "food"
+theme = "zoo"
 #set the max value of weighting associated to a perfectly matched rhyming word
-rhyme_weighting  = 0.2
+rhyme_weighting  = 0.9
 #set the value associated with a matching secound letter
-secound_letter_weighting = 0.05
+secound_letter_weighting = 0.8
 #################################################################
 
 #Instantiate English pipeline object
@@ -75,6 +75,7 @@ def create_output_list(doc, in_theme):
     result = list()
     docu = nlp(in_theme)
     theme = docu[0]
+    print(str(div_in_list))
     #make sure to empty csv file from previous runs
     with open("backend/v.03/output/scores.csv", mode='w+') as f:
         f.close()

@@ -1,0 +1,21 @@
+dog,art
+Rated,Output Word,Total,Word/Theme Similarity,Phonetic Similarity,Secound letter weight
+1,dog,0.5917308807373047,0.29173088,0.2,0.1
+Rated,Output Word,Total,Word/Theme Similarity,Phonetic Similarity,Secound letter weight
+2,dinosaur,0.3659506797790527,0.26595068,0.1,0
+Rated,Output Word,Total,Word/Theme Similarity,Phonetic Similarity,Secound letter weight
+3,desk,0.3525573372840881,0.25255734,0.1,0
+jump,art
+Rated,Output Word,Total,Word/Theme Similarity,Phonetic Similarity,Secound letter weight
+1,journal,0.33605462312698364,0.33605462,0,0
+Rated,Output Word,Total,Word/Theme Similarity,Phonetic Similarity,Secound letter weight
+2,jungle,0.3222222089767456,0.22222221,0,0.1
+Rated,Output Word,Total,Word/Theme Similarity,Phonetic Similarity,Secound letter weight
+3,jewel,0.2750933766365051,0.27509338,0,0
+kite,art
+Rated,Output Word,Total,Word/Theme Similarity,Phonetic Similarity,Secound letter weight
+1,kid,0.6294790089130401,0.329479,0.2,0.1
+Rated,Output Word,Total,Word/Theme Similarity,Phonetic Similarity,Secound letter weight
+2,kitten,0.3995301097631454,0.19953011,0.1,0.1
+Rated,Output Word,Total,Word/Theme Similarity,Phonetic Similarity,Secound letter weight
+3,kite,0.5166818529367447,0.21668185,0.2,0.1

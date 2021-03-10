@@ -1,0 +1,14 @@
+dog,zoo
+Rated,Output Word,Total,Word/Theme Similarity,Phonetic Similarity,Secound letter weight
+1,dog,2.150908184051514,0.45090818,0.9,0.8
+Rated,Output Word,Total,Word/Theme Similarity,Phonetic Similarity,Secound letter weight
+2,doctor,1.487148717045784,0.23714872,0.45,0.8
+Rated,Output Word,Total,Word/Theme Similarity,Phonetic Similarity,Secound letter weight
+3,door,1.4513593316078186,0.20135933,0.45,0.8
+man,zoo
+Rated,Output Word,Total,Word/Theme Similarity,Phonetic Similarity,Secound letter weight
+1,man,1.9648806869983673,0.2648807,0.9,0.8
+Rated,Output Word,Total,Word/Theme Similarity,Phonetic Similarity,Secound letter weight
+2,more,0.6036269783973693,0.15362698,0.45,0
+Rated,Output Word,Total,Word/Theme Similarity,Phonetic Similarity,Secound letter weight
+3,man,1.9648806869983673,0.2648807,0.9,0.8

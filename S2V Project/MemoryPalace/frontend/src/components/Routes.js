@@ -5,6 +5,7 @@ import Versions from "./Versions"
 import {BrowserRouter as Router, Switch, Route, Link, Redirect} from "react-router-dom";
 import Landing from './Landing';
 import AboutUs from './AboutUs';
+import AboutMemoryPalace from './AboutMemoryPalace';
 
 export default class Routes extends Component {
     constructor(props) {
@@ -20,6 +21,7 @@ export default class Routes extends Component {
                     <Route path= '/palace/:user' component = {Palace} />
                     <Route path= '/versions' component = {Versions} />
                     <Route path= '/about' component = {AboutUs} />
+                    <Route path= '/about-palace' component = {AboutMemoryPalace} />
                 </Switch>
             </Router>
         );

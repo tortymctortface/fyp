@@ -4,7 +4,7 @@ from .serializers import PalaceSerializer, CreatePalaceSerializer
 from .models import Palace
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .v03.app import create_output_list
+from .v1.v1 import create_output_list_v1
 from django.http import JsonResponse
 
 class PalaceView(generics.CreateAPIView):
@@ -38,7 +38,12 @@ class CreatePalaceView(APIView):
             version = serializer.data.get('version')
             theme = serializer.data.get('theme')
             words_to_remember = serializer.data.get('words_to_remember')
-            trigger_words = create_output_list(words_to_remember,theme,float(phonetic_weight),float(second_letter_weight))
+            if version == 1:
+                trigger_words = create_output_list_v1(words_to_remember,theme,float(phonetic_weight),float(second_letter_weight))
+            elif version == 2:
+                print("v2")
+            elif version == 3:
+                print ("v3")
             user = self.request.session.session_key
             queryset = Palace.objects.filter(user=user)
             if queryset.exists():

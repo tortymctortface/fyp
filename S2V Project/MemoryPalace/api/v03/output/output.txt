@@ -1,2 +1,0 @@
-Output List:
-['dog', 'journal', 'kid']

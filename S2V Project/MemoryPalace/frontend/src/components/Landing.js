@@ -16,14 +16,21 @@ export default class Landing extends Component {
                     </Typography>
                 </Grid>
                 <Grid item xs={12} align="center">
-                    <ButtonGroup disableElevation variant="contained">
-                        <Button color="secondary" to='/create' component={Link}>
+                    
+                        <Button color="primary" variant="contained" to='/create' component={Link}>
                             Build a Palace
                         </Button>
-                        <Button color="secondary" variant="outlined" to='/about' component={Link}>
+                </Grid>        
+                <Grid item xs={12} align="center">
+                        <Button color="primary"  to='/about-palace' component={Link}>
+                            What's a Memory Palace?
+                        </Button>
+                
+                </Grid>
+                <Grid item xs={12} align="center">
+                        <Button color="secondary"  to='/about' component={Link}>
                             About us
                         </Button>
-                    </ButtonGroup>
                 </Grid>
             </Grid>
         );

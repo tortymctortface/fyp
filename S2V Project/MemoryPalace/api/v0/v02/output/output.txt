@@ -1,0 +1,5 @@
+Output List:
+['the', 'dog', 'the', 'man']
+
+Output List with Verbs:
+['the', 'dog', 'the', 'man']

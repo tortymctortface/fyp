@@ -6,5 +6,6 @@ urlpatterns = [
     path('create',index),
     path('palace/<str:user>',index),
     path('versions',index),
-    path('about',index)
+    path('about',index),
+    path('about-palace', index)
 ]

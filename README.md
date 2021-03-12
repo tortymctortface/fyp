@@ -119,9 +119,13 @@ As of now it works almost the same as version 1 (see above for general instructi
 
 </details>
 
-## v3
+
 
 <details>
+
+## v3
+
+
 <summary> v3 </summary>
    <br>
    Version 3 is identical to Version 2 apart from how it calculates each "trigger words" similarity to its predecessor. In this version the weight the user inputs determines how dissimilar the word should be to its predecessor to allow for a more unusual, and hopefully more memorable, output.

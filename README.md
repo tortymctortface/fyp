@@ -22,11 +22,17 @@ This web app was built with Python and Django serving a React/Javascript fronten
 
 [Python 3](https://www.python.org/downloads/)
 
+[Django](https://docs.djangoproject.com/en/3.1/topics/install/)
+
 [spaCy](https://spacy.io/usage/)
 
 [Node.js and npm](https://nodejs.org/)
 
-[Django]
+[React](https://www.liquidweb.com/kb/install-react-js-windows/)
+
+[Material-UI](https://material-ui.com/getting-started/installation/)
+
+[Webpack](https://webpack.js.org/guides/installation/)
 
 You will also need to install the pre-trained vectors (either the 2015 or 2019 set) [here](https://github.com/explosion/sense2vec#pretrained-vectors)
 

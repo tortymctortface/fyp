@@ -16,7 +16,7 @@
 
 # Setup
 
-The front end of this project was bootstrapped with create-react-app. The backend is built in Python, with spaCy as the nlp library. The backend is connected to the React app with the help of Flask.
+This web app was built with Python and Django serving a React/Javascript frontend app. Material-UI was used for styling. 
 
 #### This project requires installation of the following if you wish to run it locally:
 
@@ -26,14 +26,14 @@ The front end of this project was bootstrapped with create-react-app. The backen
 
 [Node.js and npm](https://nodejs.org/)
 
-[Yarn](https://yarnpkg.com/)
+[Django]
 
 You will also need to install the pre-trained vectors (either the 2015 or 2019 set) [here](https://github.com/explosion/sense2vec#pretrained-vectors)
 
 #### Running the cloned project locally
 
-1. After cloning this repo, run `npm install` in your `S2v folder`. This will install all the necessary dependencies that are not uploaded to the repo thanks to the gitignore file.
-2. Once you have installed the pre-trained vectors you will need to copy its filepath and paste it into `line 7` of the `app.py` file of the version you wish to run
+1. After cloning this repo, run `npm install` in your `S2v folder`. This will install all the necessary dependencies.
+2. Once you have installed the pre-trained vectors you will need to copy its filepath and add it to the s2v variable in each of the `v1.py`, `v2.py` and `v3`.py folders file of the version you wish to run
    > `s2v = Sense2VecComponent(nlp.vocab).from_disk("**YOUR_PATH_HERE**")`
 3. After this, return to the `S2V Project` directory and run `yarn start`. This will start up the frontend. Once it starts navigate to `http://localhost:3000/` in your browser.
 4. Lastly you will need to start the backend. You can do this from the same directory by running `yarn start-api`. By default the most recent verion will start, however if you wish to change version you can. Simply navigate to the `package.json` file and change the filepath to your desired version under `scripts` -> `start-api`. The backend will be running on port 5000 but not to worry as there is a proxy in the `package.json` file to handle this.
@@ -55,11 +55,14 @@ To learn more about the technolgies used in this project here are some useful li
 # Versions
 
 <details>
+<summary> v0 </summary>
 
-<summary> v.01 </summary>
+## v01
+
+Version 01 and 02 are not in use in the final project, rather they show the progression from where the project began. 
 
 <br>
-Version 1 only provides a console output and is not connected to the React app.
+Version 01 only provides a console output and is not connected to the React app.
 
 #### How it works
 
@@ -84,16 +87,35 @@ There are multiple obvious issues right now even before rigorous testing
 </details>
 <details>
 
-<summary> v.02 </summary>
+<summary> v02 </summary>
 
 <br>
-Version 2 provides two outputs. It will present both your ouput list of words based on the given weightings of each of the three scores, as well as an output of the top three scoring words to a csv file. v.02 is also not connected to the React app but it has had many more features added, including a weighted scoring function, along with testing a new way to calaculate word similarity. It also now finds the common most similar verb to connect each neighbouring word in the create list. The errors from handling empty vectors from version 1 are also fixed and the code is much more readable. The theme is no longer a user input, it is set along with the other weights in the code. 
+Version 02 provides two outputs. It will present both your ouput list of words based on the given weightings of each of the three scores, as well as an output of the top three scoring words to a csv file. v02 is also not connected to the React app but it has had many more features added, including a weighted scoring function, along with testing a new way to calaculate word similarity. It also now finds the common most similar verb to connect each neighbouring word in the create list. The errors from handling empty vectors from version 1 are also fixed and the code is much more readable. The theme is no longer a user input, it is set along with the other weights in the code. 
 
 #### How it works
 
 As of now it works almost the same as version 1 (see above for general instructions). The main differences for the end user are :
-   1. User input theme is no longer needed
+   1. It outputs a second list which attempts to connect each trigger word with a common verb.
    2. There is now a CSV file output to track individual word scores and this displays the top three possible word matches
-   3. Users can edit the three weights in `app.py` at the top of the file : theme, phonetic and second letter.
+   3. Users can edit the three weights in `app.py` at the top of the file : theme, phonetic weight and second letter weight.
 
+</details>
+
+<details>
+<summary> v1 </summary>
+   <br>
+    Version 1 requires a theme. The list of "trigger words" it produces will all follow as closely as possible to this theme. In this version every "trigger word" will have the same first letter its corresponding "word to remember". The user can  choose the thme, the phonetic weight (how important it is for each "trigger word" to rhyme with its "word to remember") and the secound letter weight (how important it is for the second letter of each "trigger word" to be the same as the second letter for its corresponding "word to remember").
+</details>
+
+<details>
+<summary> v2 </summary>
+<br>
+   Version 2 removes the requirement of a theme and now allows the user to decide how important it is for each "trigger word" to have the samne starting letter as its corresponding "word to remember". It still consioders the phonetic and second letter weights the same as Version 1 , but now it also consider how similar each word in the "trigger list" is to its predecessor, therefore allowing the output to find a theme of its own. 
+
+</details>
+
+<details>
+<summary> v3 </summary>
+   <br>
+   Version 3 is identical to Version 2 apart from how it calculates each "trigger words" similarity to its predecessor. In this version the weight the user inputs determines how dissimilar the word should be to its predecessor to allow for a more unusual , and hopefully more memorable, output.
 </details>

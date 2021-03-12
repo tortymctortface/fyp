@@ -1,5 +1,7 @@
 # General project overview
 
+![The Memory Palace](/Images/Landing.png)
+
 #### This project aims use the Sense2Vec NLP method to create an application that is capable of:
 
     *Creating a memory map for a given list of words that a user wishes to remember.
@@ -41,8 +43,8 @@ You will also need to install the pre-trained vectors (either the 2015 or 2019 s
 1. After cloning this repo, run `npm install` in your `S2v folder`. This will install all the necessary dependencies.
 2. Once you have installed the pre-trained vectors you will need to copy its filepath and add it to the s2v variable in each of the `v1.py`, `v2.py` and `v3`.py folders file of the version you wish to run
    > `s2v = Sense2VecComponent(nlp.vocab).from_disk("**YOUR_PATH_HERE**")`
-3. After this, return to the `S2V Project` directory and run `yarn start`. This will start up the frontend. Once it starts navigate to `http://localhost:3000/` in your browser.
-4. Lastly you will need to start the backend. You can do this from the same directory by running `yarn start-api`. By default the most recent verion will start, however if you wish to change version you can. Simply navigate to the `package.json` file and change the filepath to your desired version under `scripts` -> `start-api`. The backend will be running on port 5000 but not to worry as there is a proxy in the `package.json` file to handle this.
+3. Open two terminals. In one you will need to start the backend. You can do this from the `MemoryPalace`folder by running `python .\manage.py runserver`.
+4. In the second terminal, navigate one level deeper to the `frontend` folder and run `npm run dev`. This will start the React application. 
 
 #### Extra Learning
 

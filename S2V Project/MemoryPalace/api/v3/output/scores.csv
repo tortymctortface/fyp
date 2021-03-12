@@ -1,0 +1,33 @@
+Owusu,Not_Considered
+Rated,Output Word,Total,Word and Previous Word Similarity,Phonetic Similarity,First letter weight,Secound letter weight
+1,owl,0.95,0.5,0.25,0.3,0.2
+Rated,Output Word,Total,Word and Previous Word Similarity,Phonetic Similarity,First letter weight,Secound letter weight
+2,ace,1.0,0.5,0.5,0,0
+Cline,owl
+Rated,Output Word,Total,Word and Previous Word Similarity,Phonetic Similarity,First letter weight,Secound letter weight
+1,clown,1.4138241827487945,0.7138241827487946,0.5,0.3,0.2
+Rated,Output Word,Total,Word and Previous Word Similarity,Phonetic Similarity,First letter weight,Secound letter weight
+2,clam,1.2502877831459045,0.8002877831459045,0.25,0.3,0.2
+Rated,Output Word,Total,Word and Previous Word Similarity,Phonetic Similarity,First letter weight,Secound letter weight
+3,casino,1.2039404325187206,0.9539404325187206,0.25,0.3,0
+Fernando,clown
+Rated,Output Word,Total,Word and Previous Word Similarity,Phonetic Similarity,First letter weight,Secound letter weight
+1,fern,1.2360865990320842,0.8694199323654175,0.16666666666666666,0.3,0.2
+Rated,Output Word,Total,Word and Previous Word Similarity,Phonetic Similarity,First letter weight,Secound letter weight
+2,fennel,1.1293063804507255,0.9293063804507256,0,0.3,0.2
+Rated,Output Word,Total,Word and Previous Word Similarity,Phonetic Similarity,First letter weight,Secound letter weight
+3,fence,1.0187438249588012,0.8187438249588013,0,0.3,0.2
+Jing,fern
+Rated,Output Word,Total,Word and Previous Word Similarity,Phonetic Similarity,First letter weight,Secound letter weight
+1,jockey,1.2209306694567204,0.9709306694567204,0.25,0.3,0
+Rated,Output Word,Total,Word and Previous Word Similarity,Phonetic Similarity,First letter weight,Secound letter weight
+2,jigsaw,1.214455700914065,0.8477890342473984,0.16666666666666666,0.3,0.2
+Rated,Output Word,Total,Word and Previous Word Similarity,Phonetic Similarity,First letter weight,Secound letter weight
+3,jeans,1.1922730021178722,0.9422730021178722,0.25,0.3,0
+Ignatov,jockey
+Rated,Output Word,Total,Word and Previous Word Similarity,Phonetic Similarity,First letter weight,Secound letter weight
+1,igloo,1.1584343023598194,0.9584343023598194,0,0.3,0.2
+Rated,Output Word,Total,Word and Previous Word Similarity,Phonetic Similarity,First letter weight,Secound letter weight
+2,eggnog,1.283666222790877,0.9169995561242104,0.16666666666666666,0,0.2
+Rated,Output Word,Total,Word and Previous Word Similarity,Phonetic Similarity,First letter weight,Secound letter weight
+3,eggcup,1.2,1.0,0,0,0.2

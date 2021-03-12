@@ -65,8 +65,9 @@ def create_output_list_v2(doc, in_start_word,pw,slw,flw, pwsw):
                     phonetic_score = phonetic_weight(in_token.text, token.text, pw)
                     secound_letter_score = secound_letter_weight(in_token.text, token.text, slw)
                     first_letter_score = first_letter_weight(in_token.text, token.text, flw)
+                    
                     #total weighted similarity score - stored so that it does not need to be computed more than once as .similarity is computationally quite heavy
-                    total_similarity = (pwsw*similarity) + phonetic_score+ secound_letter_score +first_letter_score
+                    total_similarity = ((pwsw*similarity) + phonetic_score+ secound_letter_score + first_letter_score)
                     #print(total_similarity)
                     #if else to handle filling the output list with the words with the highest total_similarity score
                     if token.i == (len(vocab_list)-1): 
@@ -116,7 +117,7 @@ def create_output_csv(original,w1,w2,w3,previous_word,pw,slw,flw,pwsw):
             secound_letter_score = secound_letter_weight(original, word.text,slw)
             first_letter_score = first_letter_weight(original, word.text,flw)
             #total weighted similarity score - stored so that it does not need to be computed more than once as .similarity is computationally quite heavy
-            total_similarity = similarity + phonetic_score+ secound_letter_score
+            total_similarity = similarity + phonetic_score+ secound_letter_score +first_letter_score
             with open("api/v2/output/scores.csv", mode='a') as csv_file:
                 fieldnames = ['Rated','Output Word', 'Total', 'Word and Previous Word Similarity', 'Phonetic Similarity','First letter weight', 'Secound letter weight']
                 writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
@@ -128,6 +129,8 @@ def create_output_csv(original,w1,w2,w3,previous_word,pw,slw,flw,pwsw):
 
 def first_letter_weight(wordone, wordtwo, flw):
     #The weight of this score can be set above.If the secons letter is a match between the input word and the word that will possibly be used to represent it then a smal positive weighting is applied
+    wordone = wordone.lower()
+    wordtwo = wordtwo.lower()
     if (len(wordone) > 1) and (len(wordtwo) > 1):
         if (wordone[0] == wordtwo[0]):
             return 1 * flw
@@ -138,6 +141,8 @@ def first_letter_weight(wordone, wordtwo, flw):
 
 def secound_letter_weight(wordone, wordtwo, slw):
     #The weight of this score can be set above.If the secons letter is a match between the input word and the word that will possibly be used to represent it then a smal positive weighting is applied
+    wordone = wordone.lower()
+    wordtwo = wordtwo.lower()
     if (len(wordone) > 1) and (len(wordtwo) > 1):
         if (wordone[1] == wordtwo[1]):
             return 1 * slw

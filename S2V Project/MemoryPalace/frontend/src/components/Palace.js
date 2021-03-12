@@ -63,22 +63,22 @@ export default class Palace extends Component {
                     Words to remember:  {this.state.words_to_remember}
                 </Typography>
                 <Typography variant = "subtitle1" compact="subtitle1">
-                    Theme: {this.state.theme}
+                    Version: {this.state.version}
                 </Typography>
                 <Typography variant = "subtitle1" compact="subtitle1">
-                    Version: {this.state.version}
+                    Theme: {this.state.theme}
                 </Typography>
                 <Typography variant = "subtitle1" compact="subtitle1">
                     Phonetic Weight:  {this.state.phonetic_weight}
                 </Typography>
                 <Typography variant = "subtitle1" compact="subtitle1">
-                    Preceeding Word Weight:  {this.state.second_letter_weight}
+                    Preceding Word Weight:  {this.state.previous_word_weight}
                 </Typography>
                 <Typography variant = "subtitle1" compact="subtitle1">
-                    First Letter Weight:  {this.state.second_letter_weight}
+                    First Letter Weight:  {this.state.first_letter_weight}
                 </Typography>
                 <Typography variant = "subtitle1" compact="subtitle1">
-                    Secound Letter Weight:  {this.state.second_letter_weight}
+                    Second Letter Weight:  {this.state.second_letter_weight}
                 </Typography>
             </Grid>
             <Grid item xs={12} align="center">

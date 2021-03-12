@@ -1,0 +1,2 @@
+Output List:
+['owl', 'clown', 'fern', 'jockey', 'igloo']

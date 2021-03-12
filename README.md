@@ -84,10 +84,9 @@ There are multiple obvious issues right now even before rigorous testing
    - The output list does not account for words begining with letters that are not in the vocabulary - x is a big problem as there isn't a single word begining with x in the top 10000 most common english words
    - The program throws a warning about the use of `.similarity`
 
-</details>
-<details>
+<br>
 
-<summary> v02 </summary>
+## v02
 
 <br>
 Version 02 provides two outputs. It will present both your ouput list of words based on the given weightings of each of the three scores, as well as an output of the top three scoring words to a csv file. v02 is also not connected to the React app but it has had many more features added, including a weighted scoring function, along with testing a new way to calaculate word similarity. It also now finds the common most similar verb to connect each neighbouring word in the create list. The errors from handling empty vectors from version 1 are also fixed and the code is much more readable. The theme is no longer a user input, it is set along with the other weights in the code. 
@@ -102,20 +101,28 @@ As of now it works almost the same as version 1 (see above for general instructi
 </details>
 
 <details>
+
+## v1
+
 <summary> v1 </summary>
    <br>
     Version 1 requires a theme. The list of "trigger words" it produces will all follow as closely as possible to this theme. In this version every "trigger word" will have the same first letter its corresponding "word to remember". The user can  choose the thme, the phonetic weight (how important it is for each "trigger word" to rhyme with its "word to remember") and the secound letter weight (how important it is for the second letter of each "trigger word" to be the same as the second letter for its corresponding "word to remember").
 </details>
 
 <details>
+
+## v2
+
 <summary> v2 </summary>
 <br>
    Version 2 removes the requirement of a theme and now allows the user to decide how important it is for each "trigger word" to have the samne starting letter as its corresponding "word to remember". It still consioders the phonetic and second letter weights the same as Version 1 , but now it also consider how similar each word in the "trigger list" is to its predecessor, therefore allowing the output to find a theme of its own. 
 
 </details>
 
+## v3
+
 <details>
 <summary> v3 </summary>
    <br>
-   Version 3 is identical to Version 2 apart from how it calculates each "trigger words" similarity to its predecessor. In this version the weight the user inputs determines how dissimilar the word should be to its predecessor to allow for a more unusual , and hopefully more memorable, output.
+   Version 3 is identical to Version 2 apart from how it calculates each "trigger words" similarity to its predecessor. In this version the weight the user inputs determines how dissimilar the word should be to its predecessor to allow for a more unusual, and hopefully more memorable, output.
 </details>

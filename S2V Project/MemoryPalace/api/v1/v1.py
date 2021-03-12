@@ -160,6 +160,8 @@ def create_output_csv(original,w1,w2,w3,theme,pw,slw):
 
 
 def secound_letter_weight(wordone, wordtwo, slw):
+    wordone = wordone.lower()
+    wordtwo = wordtwo.lower()
     #The weight of this score can be set above.If the secons letter is a match between the input word and the word that will possibly be used to represent it then a smal positive weighting is applied
     if (len(wordone) > 1) and (len(wordtwo) > 1):
         if (wordone[1] == wordtwo[1]):

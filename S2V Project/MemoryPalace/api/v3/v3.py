@@ -127,7 +127,9 @@ def create_output_csv(original,w1,w2,w3,previous_word,pw,slw,flw,pwsw):
         csv_file.close()
 
 def first_letter_weight(wordone, wordtwo, flw):
-    #The weight of this score can be set above.If the secons letter is a match between the input word and the word that will possibly be used to represent it then a smal positive weighting is applied
+    #The weight of this score can be set above.If the first letter is a match between the input word and the word that will possibly be used to represent it then a smal positive weighting is applied
+    wordone = wordone.lower()
+    wordtwo = wordtwo.lower()
     if (len(wordone) > 1) and (len(wordtwo) > 1):
         if (wordone[0] == wordtwo[0]):
             return 1 * flw
@@ -137,7 +139,9 @@ def first_letter_weight(wordone, wordtwo, flw):
         return 0
 
 def secound_letter_weight(wordone, wordtwo, slw):
-    #The weight of this score can be set above.If the secons letter is a match between the input word and the word that will possibly be used to represent it then a smal positive weighting is applied
+    #The weight of this score can be set above.If the second letter is a match between the input word and the word that will possibly be used to represent it then a smal positive weighting is applied
+    wordone = wordone.lower()
+    wordtwo = wordtwo.lower()
     if (len(wordone) > 1) and (len(wordtwo) > 1):
         if (wordone[1] == wordtwo[1]):
             return 1 * slw

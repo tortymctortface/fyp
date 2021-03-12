@@ -757,8 +757,7 @@ straitjacket
 streamers
 stroller
 sundial
-superheroe
-swastika
+superhero
 syringe
 tabasco
 tablespoon
@@ -769,7 +768,6 @@ teaspoon
 telegram
 telegraph
 tenticles
-testicles
 thigh
 tiara
 tiger
@@ -823,7 +821,6 @@ umbrella
 urinal
 uranium
 umbilical
-vagina
 vampire
 vanilla
 vase

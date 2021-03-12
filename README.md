@@ -1,6 +1,6 @@
 # General project overview
 
-![The Memory Palace](./S2VProject/MemoryPalace/Images/Landing.png)
+![Landing](https://user-images.githubusercontent.com/48247103/110963710-4e55da80-834a-11eb-9b92-7acee4560760.png)
 
 #### This project aims use the Sense2Vec NLP method to create an application that is capable of:
 

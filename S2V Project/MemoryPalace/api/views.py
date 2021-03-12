@@ -5,6 +5,8 @@ from .models import Palace
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .v1.v1 import create_output_list_v1
+from .v2.v2 import create_output_list_v2
+from .v3.v3 import create_output_list_v3
 from django.http import JsonResponse
 
 class PalaceView(generics.CreateAPIView):
@@ -38,27 +40,31 @@ class CreatePalaceView(APIView):
             version = serializer.data.get('version')
             theme = serializer.data.get('theme')
             words_to_remember = serializer.data.get('words_to_remember')
+            first_letter_weight = serializer.data.get('first_letter_weight')
+            previous_word_weight = serializer.data.get('previous_word_weight')
             if version == 1:
-                trigger_words = create_output_list_v1(words_to_remember,theme,float(phonetic_weight),float(second_letter_weight))
+                 trigger_words = create_output_list_v1(words_to_remember,theme,float(phonetic_weight),float(second_letter_weight))
             elif version == 2:
-                print("v2")
+                trigger_words = create_output_list_v2(words_to_remember, "Not_Considered",float(phonetic_weight),float(second_letter_weight),float(first_letter_weight), float(previous_word_weight))
             elif version == 3:
-                print ("v3")
+                 trigger_words = create_output_list_v3(words_to_remember, "Not_Considered",float(phonetic_weight),float(second_letter_weight),float(first_letter_weight), float(previous_word_weight))
             user = self.request.session.session_key
             queryset = Palace.objects.filter(user=user)
             if queryset.exists():
                 palace = queryset[0]
                 palace.phonetic_weight = phonetic_weight
                 palace.second_letter_weight = second_letter_weight
-                palace.version = version
                 palace.theme = theme
+                palace.first_letter_weight = first_letter_weight
+                palace.previous_word_weight = previous_word_weight
                 palace.trigger_words = trigger_words
+                palace.version = version
                 palace.words_to_remember=words_to_remember
-                palace.save(update_fields=['phonetic_weight','second_letter_weight','version','theme','words_to_remember', 'trigger_words'])
+                palace.save(update_fields=['phonetic_weight','second_letter_weight','version','theme','words_to_remember', 'first_letter_weight','previous_word_weight','trigger_words'])
                 self.request.session['user'] = palace.user
                 return Response(PalaceSerializer(palace).data, status = status.HTTP_200_OK)
             else:
-                palace=Palace(user=user,phonetic_weight= phonetic_weight,second_letter_weight = second_letter_weight, version=version,theme = theme, words_to_remember = words_to_remember, trigger_words=trigger_words)
+                palace=Palace(user=user,phonetic_weight= phonetic_weight,second_letter_weight = second_letter_weight,theme = theme, words_to_remember = words_to_remember, previous_word_weight= previous_word_weight, first_letter_weight= first_letter_weight, trigger_words=trigger_words)
                 palace.save()
                 self.request.session['user'] = palace.user
                 return Response(PalaceSerializer(palace).data, status = status.HTTP_201_CREATED)

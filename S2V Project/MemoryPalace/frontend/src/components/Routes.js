@@ -6,6 +6,9 @@ import {BrowserRouter as Router, Switch, Route, Link, Redirect} from "react-rout
 import Landing from './Landing';
 import AboutUs from './AboutUs';
 import AboutMemoryPalace from './AboutMemoryPalace';
+import V1 from "./V1"
+import V2 from "./V2"
+import V3 from "./V3"
 
 export default class Routes extends Component {
     constructor(props) {
@@ -22,6 +25,9 @@ export default class Routes extends Component {
                     <Route path= '/versions' component = {Versions} />
                     <Route path= '/about' component = {AboutUs} />
                     <Route path= '/about-palace' component = {AboutMemoryPalace} />
+                    <Route path='/V1' component = {V1}/>
+                    <Route path='/V2' component = {V2}/>
+                    <Route path='/V3' component = {V3}/>
                 </Switch>
             </Router>
         );

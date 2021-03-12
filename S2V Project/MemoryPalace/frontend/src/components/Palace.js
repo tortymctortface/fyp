@@ -3,10 +3,12 @@ import {ButtonGroup,Button,Grid,Typography} from "@material-ui/core";
 import {Link} from"react-router-dom";
 
 export default class Palace extends Component { 
-    defaultTheme = "food";  
-    defaultVersion = 2;
-    defaultPW = 0.2;
-    defaultSLW = 0.1;
+    defaultTheme = "";  
+    defaultVersion = 0;
+    defaultPW = 0;
+    defaultSLW = 0;
+    defaultFLW = 0;
+    defaultPWSW = 0;
 
     constructor(props) {
         super(props);
@@ -15,6 +17,8 @@ export default class Palace extends Component {
             version: this.defaultVersion,
             phonetic_weight: this.defaultPW,
             second_letter_weight: this.defaultSLW,
+            first_letter_weight: this.defaultFLW,
+            previous_word_weight:this.defaultPWSW
         }
         this.user = this.props.match.params.user;
         this.getPalaceDetails();
@@ -28,13 +32,17 @@ export default class Palace extends Component {
         this.setState({
             theme:data.theme,
             version: data.version,
-            phonetic_weight: data. phonetic_weight,
+            phonetic_weight: data.phonetic_weight,
+            previous_word_weight: data.previous_word_weight,
+            first_letter_weight: data.first_letter_weight,
             second_letter_weight: data.second_letter_weight,
             words_to_remember: data.words_to_remember,
             trigger_words: data.trigger_words
         });
       });
   }
+
+
 
     render(){
         return(
@@ -62,6 +70,12 @@ export default class Palace extends Component {
                 </Typography>
                 <Typography variant = "subtitle1" compact="subtitle1">
                     Phonetic Weight:  {this.state.phonetic_weight}
+                </Typography>
+                <Typography variant = "subtitle1" compact="subtitle1">
+                    Preceeding Word Weight:  {this.state.second_letter_weight}
+                </Typography>
+                <Typography variant = "subtitle1" compact="subtitle1">
+                    First Letter Weight:  {this.state.second_letter_weight}
                 </Typography>
                 <Typography variant = "subtitle1" compact="subtitle1">
                     Secound Letter Weight:  {this.state.second_letter_weight}

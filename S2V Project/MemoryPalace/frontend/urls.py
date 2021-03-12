@@ -7,5 +7,8 @@ urlpatterns = [
     path('palace/<str:user>',index),
     path('versions',index),
     path('about',index),
-    path('about-palace', index)
+    path('about-palace', index),
+    path('v1',index),
+    path('v2',index), 
+    path('v3',index),
 ]

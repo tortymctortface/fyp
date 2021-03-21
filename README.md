@@ -48,6 +48,7 @@ You will also need to install the pre-trained vectors (either the 2015 or 2019 s
 #### Note
 Only v1, v2 and v3 are in use in the final application
 <br>
+<br>
 <details>
 
 <summary>Screenshot from webapp of version selection page</summary>
@@ -107,7 +108,7 @@ As of now it works almost the same as version 1 (see above for general instructi
 
 <summary> v1 </summary>
    <br>
-    Version 1 requires a theme. The list of "trigger words" it produces will all follow as closely as possible to this theme. In this version every "trigger word" will have the same first letter its corresponding "word to remember". The user can  choose the thme, the phonetic weight (how important it is for each "trigger word" to rhyme with its "word to remember") and the secound letter weight (how important it is for the second letter of each "trigger word" to be the same as the second letter for its corresponding "word to remember").
+    Version 1 requires a theme. The list of "trigger words" it produces will all follow as closely as possible to this theme. In this version every "trigger word" will have the same first letter as its corresponding "name to remember". The user can  choose the `theme`, the `phonetic weight` (how important it is for each "trigger word" to rhyme with its "word to remember") and the `secound letter weight` (how important it is for the second letter of each "trigger word" to be the same as the second letter for its corresponding "word to remember").
 </details>
 
 <details>
@@ -116,7 +117,7 @@ As of now it works almost the same as version 1 (see above for general instructi
 
 <summary> v2 </summary>
 <br>
-   Version 2 removes the requirement of a theme and now allows the user to decide how important it is for each "trigger word" to have the samne starting letter as its corresponding "word to remember". It still consioders the phonetic and second letter weights the same as Version 1 , but now it also consider how similar each word in the "trigger list" is to its predecessor, therefore allowing the output to find a theme of its own. 
+   Version 2 removes the requirement of a theme and now allows the user to decide how important it is for each "trigger word" to have the same `starting letter` as its corresponding "name to remember". It still considers the `phonetic` and `second letter weights` the same as Version 1 , but now it also consider `how similar` each word in the "trigger list" is to its predecessor in the "trigger list", therefore allowing the output to find a theme of its own. 
 
 </details>
 
@@ -129,7 +130,7 @@ As of now it works almost the same as version 1 (see above for general instructi
 
 <summary> v3 </summary>
    <br>
-   Version 3 is identical to Version 2 apart from how it calculates each "trigger words" similarity to its predecessor. In this version the weight the user inputs determines how dissimilar the word should be to its predecessor to allow for a more unusual, and hopefully more memorable, output.
+   Version 3 is `identical to Version 2` apart from how it calculates each "trigger words" similarity to its predecessor. In this version the weight the user inputs determines `how dissimilar` each word in the "trigger list" is to its predecessor in the "trigger list" to allow for a more unusual, and hopefully more memorable, output.
 </details>
 
 

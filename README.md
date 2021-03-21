@@ -130,12 +130,12 @@ As of now it works almost the same as version 1 (see above for general instructi
 </details>
 
 
-#### Testing 
+# Testing 
 
 To run all backend tests navigate to the `MemoryPalace`folder and run `python -m unittest api/tests/test_all_versions.py`
 
 
-#### Extra Learning
+# Extra Learning
 
 To learn more about the technolgies used in this project here are some useful links:
 

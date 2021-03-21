@@ -44,11 +44,10 @@ You will also need to install the pre-trained vectors (either the 2015 or 2019 s
 
 
 # Versions
-<br>
 
 #### Note
 Only v1, v2 and v3 are in use in the final application
-
+<br>
 <details>
 
 <summary>Screenshot from webapp of version selection page</summary>

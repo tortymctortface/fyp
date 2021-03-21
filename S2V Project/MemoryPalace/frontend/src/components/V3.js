@@ -242,7 +242,7 @@ export default class V3 extends Component {
                     <HtmlTooltip
                         title={
                             <React.Fragment>
-                            <Typography color="inherit">pleae</Typography>
+                            <Typography color="inherit">Enter this list of words you would like to memerise. The list should consist of single words separated by a comma.</Typography>
                         </React.Fragment>
                         }
                         >

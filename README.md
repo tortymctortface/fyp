@@ -2,21 +2,16 @@
 
 ![Landing](https://user-images.githubusercontent.com/48247103/110963710-4e55da80-834a-11eb-9b92-7acee4560760.png)
 
-#### This project aims use the Sense2Vec NLP method to create an application that is capable of:
+#### This project uses sense2vec along with other nlp techniques to create an application that is capable of creating a memory palace for a given list of names that a user wishes to remember.
 
-    *Creating a memory map for a given list of words that a user wishes to remember.
-    *The memory map should be able to be built with a vocabulary supplied by the user.
-    *The memory map returned should be an easy to remember list of words that corresponds to the input list in a way that would also allow for easy recall of that list.
-    *The memory map should utilise the vocabulary in a way that makes the memory map human-readable, easy to recall and should also aim to reduce the possibility of human error during recall such as avoiding duplicated words in the output.
+    *Each memory palace output is in the form of an easy to remember list of trigger words that correspond to the user input list of names.
+    *This trigger list is designed in a way that each word it contains corresponds directly with one of the words the user wishes to remember.
+    *Every trigger list is built using a set of weights defined by the user. These weights each decide how impactful different natural language aspects affect the created trigger list, including phonetics, also considering matching starting letters, and the all important word similarity.
+    *There are 3 different versions (detailed below) for the user to choose from, each uses word similarity, based on pre-trained sense2vec vectors, in a different way. V1 also has a different number of weights required than v2 and v3.
+    *The user can supply their own vocabulary if they wish to limit the possible words in the output (i.e. a user may wish to build a vr memory palace based off of the output and may want to limit the possible results to a list of objects they can use in their vr palace).
+    *After a number of test we have determined that v2 is the solution that builds the stongest most memorable palaces for the majority of users.
 
-#### Advanced software solutions to this problem would also consider:
-
-    *Return a list of only visualisable objects to allow for the possiblity of this application being used in furture research in creating memory maps in VR.
-    *The possibility of using the list of words returned from above to build a story as an output. This may allow for easier recall of the output list and in turn of the original input list.
-    *Using a structure and phonetics in a way that could sound rhythmic like lyrics to a song or a poem. This way the possibility of converting a list of family names of AD patients and converting them into a song or poem which could be listened to or read by/to the patient regularly to possibly allow for recall of the song/poem as AD progresses and then in turn the recall of family names from that.
-    *The most advanced solution would account for all three outputs, allowing for future work in the development of VR memory palaces, possible research into memory preservation in patients with AD and also to simply aid users in the creation of personal memory palaces.
-
-# Setup
+# Setup and Installation
 
 This web app was built with Python and Django serving a React/Javascript frontend app. Material-UI was used for styling. 
 
@@ -41,28 +36,21 @@ You will also need to install the pre-trained vectors (either the 2015 or 2019 s
 #### Running the cloned project locally
 
 1. After cloning this repo, run `npm install` in your `S2v folder`. This will install all the necessary dependencies.
-2. Once you have installed the pre-trained vectors you will need to copy its filepath and add it to the s2v variable in each of the `v1.py`, `v2.py` and `v3`.py folders file of the version you wish to run
+2. Once you have installed the pre-trained vectors (see above) you will need to copy its filepath and add it to the s2v variable in each of the `v1.py`, `v2.py` and `v3`.py folders file of the version you wish to run
    > `s2v = Sense2VecComponent(nlp.vocab).from_disk("**YOUR_PATH_HERE**")`
 3. Open two terminals. In one you will need to start the backend. You can do this from the `MemoryPalace`folder by running `python .\manage.py runserver`.
 4. In the second terminal, navigate one level deeper to the `frontend` folder and run `npm run dev`. This will start the React application. 
+5. The application will now be running on http://127.0.0.1:8000/
 
-#### Extra Learning
-
-To learn more about the technolgies used in this project here are some useful links:
-
-[spaCy 101](https://course.spacy.io/en) - NLP
-
-[Python 101](https://www.youtube.com/watch?v=rfscVS0vtbw) - For the backend
-
-[Django](https://www.youtube.com/channel/UC4JX40jDee_tINbkjycV4Sg) - Backend Framework
-
-[JavaScript](https://www.youtube.com/watch?v=W6NZfCO5SIk&t=101s&ab_channel=ProgrammingwithMosh) - For the frontend
-
-[React basics](https://reactjs.org/tutorial/tutorial.html) - Frontend framework
 
 # Versions
+<br>
+<details>
+
+<summary>Screenshot from webapp of version selection page</summary>
 
 ![create](https://user-images.githubusercontent.com/48247103/110963852-78a79800-834a-11eb-806e-36f060a5fa27.png)
+</details>
 
 <details>
 <summary> v0 </summary>
@@ -140,3 +128,23 @@ As of now it works almost the same as version 1 (see above for general instructi
    <br>
    Version 3 is identical to Version 2 apart from how it calculates each "trigger words" similarity to its predecessor. In this version the weight the user inputs determines how dissimilar the word should be to its predecessor to allow for a more unusual, and hopefully more memorable, output.
 </details>
+
+
+#### Testing 
+
+To run all backend tests navigate to the `MemoryPalace`folder and run `python -m unittest api/tests/test_all_versions.py`
+
+
+#### Extra Learning
+
+To learn more about the technolgies used in this project here are some useful links:
+
+[spaCy 101](https://course.spacy.io/en) - NLP
+
+[Python 101](https://www.youtube.com/watch?v=rfscVS0vtbw) - For the backend
+
+[Django](https://www.youtube.com/channel/UC4JX40jDee_tINbkjycV4Sg) - Backend Framework
+
+[JavaScript](https://www.youtube.com/watch?v=W6NZfCO5SIk&t=101s&ab_channel=ProgrammingwithMosh) - For the frontend
+
+[React basics](https://reactjs.org/tutorial/tutorial.html) - Frontend framework

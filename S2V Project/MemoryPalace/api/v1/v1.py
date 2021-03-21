@@ -6,6 +6,7 @@ import phonetics
 import enchant
 import warnings
 import csv
+import pronouncing
 
 #################################################################
 # Weights to be used in each of the following functions
@@ -23,11 +24,11 @@ nlp = spacy.load("en_core_web_lg")
 #load pre-trained sense2vec vectors
 s2v = Sense2VecComponent(nlp.vocab).from_disk("C:/fyp/s2v_reddit_2019_lg")
 #add vectors to the procesing pipeline
-nlp.add_pipe(s2v)
+#nlp.add_pipe(s2v)
 #read in and process the input list the user wants to remember
-with open("api/v1/input_list/input_list.txt","r", encoding="utf-8") as f:
-    TEXT = f.read()
-doc = nlp(TEXT)
+#with open("api/v1/input_list/input_list.txt","r", encoding="utf-8") as f:
+#    TEXT = f.read()
+#doc = nlp(TEXT)
 
 def create_first_letter_files(doc):
     #find all first letters in the doc and create only unique a list of unique text file names to use
@@ -171,17 +172,26 @@ def secound_letter_weight(wordone, wordtwo, slw):
     else:
         return 0
 
-def phonetic_weight(wordone, wordtwo,pw):
+def phonetic_weight(name_to_remember, current_trigger_word,pw):
     #provide a score for the phonetic s2v_similarity of two words using double metaphone and damaru levenshtein. The weight of this score can be set above.
-    w1 = phonetics.dmetaphone(wordone)
-    w2 = phonetics.dmetaphone(wordtwo)
-    score = enchant.utils.levenshtein(w1, w2)
-    if score == 0:
-        return pw
-    elif score == 1:
-        return (pw/2)
+    if name_to_remember[0] == ('w' or 'q'):
+        w1_without_fl = phonetics.metaphone(name_to_remember[2:])
     else:
-        return 0
+        w1_without_fl = phonetics.metaphone(name_to_remember[1:]) 
+    if current_trigger_word[0] == ('w' or 'q'):
+        w2_without_fl = phonetics.metaphone(current_trigger_word[2:])
+    else: 
+        w2_without_fl = phonetics.metaphone(current_trigger_word[1:]) 
+    score_without_fl = enchant.utils.levenshtein(w1_without_fl, w2_without_fl)
+
+    checklist = pronouncing.rhymes(name_to_remember)
+    
+    if current_trigger_word in checklist:
+        return pw
+    elif score_without_fl == 0:
+        return pw/1.5
+    else: 
+        return pw/(score_without_fl+1)
 
 def create_verbs_only_file ():
     #find all available verbs in the given vocab and add them to a text file to reduce the search space for add_similar_verbs_to_output_list.
@@ -252,7 +262,5 @@ def add_similar_verbs_to_output_list(the_list):
         f.close()
     return outlist
 
-#the_list = ['alcohol', 'agriculture', 'drink', 'meal', 'accommodation', 'nutrition', 'meat', 'inedible', 'cooking', 'takeout', 'animal', 'nutrient', 'wheat', 'junk', 'medicine', 'soup', 'toothpaste', 'needy', 'dish', 'quail', 'ketchup', 'seafood', 'asparagus', 'milk', 'yogurt', 'transportation', 'oatmeal', 'food', 'tea', 'pork', 'omelette', 'cuisine', 'wine', 'tuna', 'eaten', 'upbrining', 'entertainment', 'jewellery', 'soda', 'appetizing', 'loaf', 'gourmet', 'amenity', 'tobacco', 'kitchen', 'liquor', 'booze', 'onion', 'morsel', 'agricultural', 'aid', 'goods', 'appetite', 'tomato', 'urine', 'iodine', 'poultry', 'oil', 'coffee', 'condiment', 'meatloaf', 'yummy', 'ammunition', 'tongs', 'gruel', 'bread', 'ingredient', 'allowance', 'edible', 'affection', 'antibiotic', 'mutton', 'eatable', 'waiter', 'margarine', 'steak', 'electricity', 'jobless', 'cutlery', 'knives', 'aroma', 'appliance', 'tasting', 'unhealthy', 'nanny', 'kitty', 'dinner', 'juice']
-#the_list = create_output_list(doc,theme)
-#add_similar_verbs_to_output_list(the_list)
+
                     

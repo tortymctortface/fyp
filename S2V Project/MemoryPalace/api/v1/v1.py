@@ -11,7 +11,7 @@ import pronouncing
 #################################################################
 # Weights to be used in each of the following functions
 #################################################################
-#set theme to be used for s2v_similarity comparison (between -2 and 2)
+#set theme to be used for s2v_similarity comparison 
 theme = "zoo"
 #set the max value of weighting associated to a perfectly matched rhyming word
 rhyme_weighting  = 0.9
@@ -70,7 +70,6 @@ def split_input_list (doc):
 
 def create_output_list_v1(doc, in_theme,pw,slw):
     #this takes in a one word theme from the user and returns the most similar unique word to it that starts with the same letter for every word in the input list
-    #there is currently an unrequired for loop, and it throws warnings about the .simalrity
     doc = nlp(doc)
     create_first_letter_files (doc)
     result = list()
@@ -147,7 +146,7 @@ def create_output_csv(original,w1,w2,w3,theme,pw,slw):
             similarity = theme.similarity(word)
             phonetic_score = phonetic_weight(original, word.text,pw)
             secound_letter_score = secound_letter_weight(original, word.text,slw)
-            #total weighted similarity score - stored so that it does not need to be computed more than once as .similarity is computationally quite heavy
+            #total weighted similarity score - stored so that it does not need to be computed more than once 
             total_similarity = similarity + phonetic_score+ secound_letter_score
             with open("api/v1/output/scores.csv", mode='a') as csv_file:
                 fieldnames = ['Rated','Output Word', 'Total', 'Word/Theme Similarity', 'Phonetic Similarity','Secound letter weight']
@@ -173,7 +172,7 @@ def secound_letter_weight(wordone, wordtwo, slw):
         return 0
 
 def phonetic_weight(name_to_remember, current_trigger_word,pw):
-    #provide a score for the phonetic s2v_similarity of two words using double metaphone and damaru levenshtein. The weight of this score can be set above.
+#create metaphone codes without the first unnecessary letters
     if name_to_remember[0] == ('w' or 'q'):
         w1_without_fl = phonetics.metaphone(name_to_remember[2:])
     else:
@@ -182,12 +181,17 @@ def phonetic_weight(name_to_remember, current_trigger_word,pw):
         w2_without_fl = phonetics.metaphone(current_trigger_word[2:])
     else: 
         w2_without_fl = phonetics.metaphone(current_trigger_word[1:]) 
+#calculate the levenshtein distance between the two metaphone codes
     score_without_fl = enchant.utils.levenshtein(w1_without_fl, w2_without_fl)
 
+#create a list of all known rhyming words from the pronouncing library
     checklist = pronouncing.rhymes(name_to_remember)
-    
+
+#check if the candidate trigger word is in the list of know rhyming words 
     if current_trigger_word in checklist:
         return pw
+#otherwise calculate its phonetic similarity using the users pw(phonetic weight) and ..
+#..the levenshtein/metaphone score
     elif score_without_fl == 0:
         return pw/1.5
     else: 

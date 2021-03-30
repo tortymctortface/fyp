@@ -14,7 +14,7 @@ import numpy as np
 # Weights to be used in each of the following functions
 #################################################################
 start_word = "Not_Considered"
-#set start_word weight
+#set the previous word similarity weight
 pwsw = 0.7
 #set the max value of weighting associated to a perfectly matched rhyming word
 pw  = 0.9
@@ -34,7 +34,6 @@ s2v = Sense2Vec().from_disk("C:/fyp/s2v_reddit_2019_lg")
 
 def create_output_list_v2(doc,in_start_word,pw,slw,flw, pwsw):
     #this takes in a one word start_word from the user and returns the most similar unique word to it that starts with the same letter for every word in the input list
-    #there is currently an unrequired for loop, and it throws warnings about the .simalrity
     doc = nlp(doc)
     highest_scoring_list = []
     second_best_list=[]
@@ -65,7 +64,7 @@ def create_output_list_v2(doc,in_start_word,pw,slw,flw, pwsw):
                         phonetic_score = phonetic_weight(name.text, possible_trigger_word.text, pw)
                         secound_letter_score = secound_letter_weight(name.text, possible_trigger_word.text, slw)
                         first_letter_score = first_letter_weight(name.text, possible_trigger_word.text, flw)
-                        #total weighted similarity score - stored so that it does not need to be computed more than once as .similarity is computationally quite heavy
+                        #total weighted similarity score - stored so that it does not need to be computed more than once as 
                         total_similarity = (similarity_score + phonetic_score+ secound_letter_score + first_letter_score)
 
                     #if else to handle filling the output list with the words with the highest total_similarity score
@@ -151,15 +150,17 @@ def create_output_csv(original,w1,w2,w3,l1,l2,l3,previous_word,pw,slw,flw,pwsw):
 def similarity_weight(previous_word,current_trigger_word, pwsw):
     try:
         warnings.filterwarnings("ignore", category=UserWarning)
-        #using the .similarity here instead of ._.s2v_similarity as Ive noticed faster and better results from it
+        #convert both words into keys..
+        #.. then convert each of the keys into their s2v vector representations
         a = s2v[str(current_trigger_word.text + "|NOUN")]
         b = s2v[str(previous_word.text + "|NOUN")]
+        #manualy calcualte the cosine similarity as the built in .similarity only accepts spaCy tokens
         def cosine_similarity(x,y):
             root_x=np.sqrt(sum([i**2 for i in x]))
             root_y=np.sqrt(sum([i**2 for i in y]))
             return sum([i*j for i,j in zip(x,y)])/root_x/root_y
-                    
         similarity = cosine_similarity(a,b)
+        #Weight the score using the user input pwsw (previous word similarity weight)
         similarity_score = similarity*pwsw
         return similarity_score
     except: 
@@ -191,7 +192,7 @@ def secound_letter_weight(name_to_remember, current_trigger_word, slw):
         return 0
 
 def phonetic_weight(name_to_remember, current_trigger_word,pw):
-    #provide a score for the phonetic s2v_similarity of two words using double metaphone and damaru levenshtein. The weight of this score can be set above.
+#create metaphone codes without the first unnecessary letters
     if name_to_remember[0] == ('w' or 'q'):
         w1_without_fl = phonetics.metaphone(name_to_remember[2:])
     else:
@@ -200,12 +201,17 @@ def phonetic_weight(name_to_remember, current_trigger_word,pw):
         w2_without_fl = phonetics.metaphone(current_trigger_word[2:])
     else: 
         w2_without_fl = phonetics.metaphone(current_trigger_word[1:]) 
+#calculate the levenshtein distance between the two metaphone codes
     score_without_fl = enchant.utils.levenshtein(w1_without_fl, w2_without_fl)
 
+#create a list of all known rhyming words from the pronouncing library
     checklist = pronouncing.rhymes(name_to_remember)
-    
+
+#check if the candidate trigger word is in the list of know rhyming words 
     if current_trigger_word in checklist:
         return pw
+#otherwise calculate its phonetic similarity using the users pw(phonetic weight) and ..
+#..the levenshtein/metaphone score
     elif score_without_fl == 0:
         return pw/1.5
     else: 
